@@ -64,8 +64,38 @@
     openKey = "";
     movieKey = "";
 
+    username = "";
+    password = "";
+    database = "";
 
-    loadMovies();
+
+    function loadPasswords(){
+
+        $.ajax({
+            type: "GET",
+            data: {},
+            url: "passwords.json",
+            success: function(data){
+                if(data !== null){
+
+                    document.getElementById("latest").innerText = JSON.stringify(data, null, 4);
+
+                    openKey = $passwords[0].api_key;
+                    movieKey = $passwords[1].api_key;
+                    servername = $passwords[2].servername;
+                    username = $passwords[2].username;
+                    password = $passwords[2].password;
+                    database = $passwords[2].database;
+
+                    //document.getElementById("latest").innerText = openKey;
+                }
+            }
+        });
+
+    }
+
+    //loadMovies();
+    loadPasswords();
     //getUpcomingMovies();
 
 
