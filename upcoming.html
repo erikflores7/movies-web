@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>Upcoming Movies</title>
+</head>
+<body>
+
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">Moovies </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="#">Recommended <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">Rated</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Movies <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Latest </a></li>
+                        <li><a href="#">Top Rated</a></li>
+                        <li><a href="#">Upcoming </a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Horror </a></li>
+                        <li><a href="#">Comedy </a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="navbar-form navbar-right">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Find Movies...">
+                </div>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div class="container" id="latest">
+
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script>
+
+    openKey = "";
+    movieKey = "";
+
+
+    loadMovies();
+    //getUpcomingMovies();
+
+
+    function createRating(imdb, tomatoes, metacritic){
+
+        var stars = "<div class='col-sm-5'><ul class='list-inline'>";
+
+        if(imdb !== "N/A") {
+            stars += "<li class='imdb'><span class='glyphicon glyphicon-star checked' aria-hidden='true'></span> " + imdb + "</li>";
+        }else{
+            stars += "<li class='imdb'><span class='glyphicon glyphicon-star' aria-hidden='true'></span> N/A </li>";
+        }
+        if(tomatoes !== "") {
+            stars += "<li class='tomatoes'><a href='https://www.rottentomatoes.com/m/the_meg'><img src='https://www.rottentomatoes.com/assets/pizza-pie/images/icons/global/new-fresh.587bf3a5e47.png' style='max-height: 16px'> " + tomatoes + "</a></li>";
+        }else{
+            stars += "<li class='tomatoes'><img src='https://www.rottentomatoes.com/assets/pizza-pie/images/icons/global/new-fresh.587bf3a5e47.png' style='max-height: 16px'>  N/A </li>";
+        }
+        stars += "</ul></div>";
+        return stars;
+    }
+
+    function getUpcomingMovies(){
+
+        var upcomingMovies = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://api.themoviedb.org/3/movie/upcoming?page=1&language=en-US&api_key=" + $movieKey,
+            "method": "GET",
+            "headers": {},
+            "data": "{}"
+        }
+
+
+        $.ajax(upcomingMovies).done(function (response) {
+
+            var size = response.results.length - 1;
+
+            for(i in response.results){
+
+                var last = false;
+                if(i  == (size)){
+                    last = true;
+                }
+
+                var title = response.results[i].title;
+
+                $.ajax({
+                    type: "POST",
+                    data: {"title":title},
+                    url: "exists-upcoming.php",
+                    success: function(data){
+                        if(data[0] == 0){
+                            var $test = data.slice(1);
+
+                            addToDatabase($test);
+                        }
+                    }
+                });
+
+
+            }
+        });
+
+    }
+
+    /* Does not work as function returns before AJAX is done.
+    function exists(title){
+
+        $.ajax({
+            type: "POST",
+            data: {"title":title},
+            url: "exists-upcoming.php",
+            success: function(data){
+                callback(data);
+            }
+        });
+
+    }
+    */
+
+    function addToDatabase(title){
+
+        var openDatabase = {
+            "async": true,
+            "crossDomain": true,
+            "url": "http://www.omdbapi.com/?t='" + title + "'&type=movie&y=2018&plot=short&apikey=" + $openKey,
+            "method": "GET",
+            "headers": {},
+            "data": "{}"
+        }
+
+        $.ajax(openDatabase).done(function (movie) {
+
+            if (movie.Response === "True" && movie.imdbID !== null) {
+
+                var id = movie.imdbID;
+                var release_date = movie.Released;
+                var year = movie.Year;
+                var genre = movie.Genre;
+                var imdb = movie.imdbRating;
+                var tomatoes = "";
+            if(movie.Ratings !== null){
+                for(i in movie.Ratings){
+                    if(movie.Ratings[i].Source === "Rotten Tomatoes"){
+                        tomatoes = movie.Ratings[i].Value;
+                    }
+                }
+            }
+                var metacritic = movie.Metascore;
+                var dvd_release = movie.DVD;
+                var runtime = movie.Runtime;
+                var poster  = "";
+                if(movie.Poster !== null){
+                    poster = movie.Poster.slice(33);
+                }
+                var summary = movie.Plot;
+                //str = JSON.stringify(response, null, 4);
+
+                   $.ajax({
+                        type: "POST",
+                        data: {"id":id, "title": title, "release_date":release_date, "year":year, "genre":genre, "imdb":imdb, "tomatoes":tomatoes, "metacritic":metacritic, "dvd_release":dvd_release, "runtime":runtime, "poster":poster, "summary":summary},
+                        url: "update-upcoming.php",
+                        success: function (data) {
+
+                            //document.getElementById("latest").innerText +=  " Added " + data;
+
+                        }
+                    });
+
+                }
+
+        });
+    }
+
+    function loadMovies(){
+
+
+        $.ajax({
+            type: "GET",
+            data: {},
+            url: "get-upcoming.php",
+            success: function(moviesRAW) {
+
+                if (moviesRAW !== null) {
+
+                var $movies = JSON.parse(moviesRAW);
+
+                    for (i in $movies) {
+                         document.getElementById("latest").innerHTML += "<div class='row' id='" + i + "' style='margin-bottom:1.2em;" + "'></div>";
+
+
+                        document.getElementById(i).innerHTML +=  "<div class='col-sm-3'><span class='poster'><img src='https://m.media-amazon.com/images" + $movies[i].poster + "'></span> </div><div class='col-sm-4'><div class='row' id='title'><b>" + $movies[i].title + " (" + $movies[i].year + ")</b></div> <div class='row'>" + createRating($movies[i].imdb, $movies[i].tomatoes, $movies[i].metacritic) + "<div class='col-sm-6' id='releaseDate'> Release: " + $movies[i].release_date + "</div></div><div class='row'>" + $movies[i].summary + "</div></div>";
+
+
+                    }
+                }
+            }
+        });
+
+    }
+
+
+    function displayMovies(movies){
+
+        document.getElementById("latest").innerText += JSON.stringify(movies[0], null, 4);
+
+        for(i in movies){
+
+            var imageSrc = "https://image.tmdb.org/t/p/w300_and_h450_bestv2" + movies[i].poster_path;
+            document.getElementById("latest").innerHTML += "<div class='row' id='" + i + "' style='margin-bottom:1.2em;" +
+                "'></div>";
+
+            document.getElementById(i).innerHTML +=  "<div class='col-sm-3'><span class='poster'><img src=" + movies[i].Poster + "></span> </div><div class='col-sm-7'><div class='row' id='title'><b>" + movies[i].Title + " (" + movies[i].Year + ")</b></div> <div class='row'>" + createRating(movies[i].vote_average) + "</div><div class='row'>Hello</div></div>";
+            //getTrailer(movies[i].id, i);
+        }
+    }
+   // movies = [];
+
+  /*  function getMovies(title, last){
+
+
+        var deets = {
+            "async": true,
+            "crossDomain": true,
+            "url": "http://www.omdbapi.com/?t=" + title + "&type=movie&y=2018&plot=full&apikey=4b4d9be1",
+            "method": "GET",
+            "headers": {},
+            "data": "{}"
+        }
+
+        $.ajax(deets).done(function (response) {
+            //str = JSON.stringify(response, null, 4);
+            if (response.Response) {
+
+                movies.push(response);
+
+                if (last) {
+                    loadMovies(movies);
+                }
+            }
+        });
+
+    } */
+
+   /* function hasOneDayPassed(){
+        var date = new Date().toLocaleDateString();
+
+        if() {
+            return false;
+        }
+
+
+        return true;
+    }
+
+    // some function which should run once a day
+    function runOncePerDay(){
+        if( !hasOneDayPassed()){
+            return false;
+        }
+    }*/
+
+</script>
+
+</body>
+</html>

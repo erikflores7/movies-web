@@ -1,0 +1,44 @@
+    .checked {
+        color: #ffcc2d;
+    }
+
+    body{
+        background-color: #ecf0ff;
+    }
+
+    .summary {
+        background-color: black;
+    }
+
+    #title{
+        font-size: 20px;
+    }
+
+    .row img{
+        max-width: 100%;
+    }
+
+    header{
+        padding-left: 2em;
+        margin-top: -20px;
+    }
+
+    .tomatoes{
+        font-family: 'Franklin Gothic FS Med',sans-serif;
+        font-size: 16px;
+        max-height: 16px;
+    }
+
+    .tomatoes img{
+        max-height: 16px;
+        position: relative;
+        bottom: .1em;
+    }
+
+    .imdb{
+        font-size: 16px;
+    }
+
+    #releaseDate{
+        font-size: 14px;
+    }
