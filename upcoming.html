@@ -64,6 +64,7 @@
     openKey = "";
     movieKey = "";
 
+    servername= "";
     username = "";
     password = "";
     database = "";
@@ -75,29 +76,29 @@
             type: "GET",
             data: {},
             url: "passwords.json",
-            success: function(data){
-                if(data !== null){
+            success: function(passwords){
+                if(passwords !== null){
 
-                    document.getElementById("latest").innerText = JSON.stringify(data, null, 4);
+                    openKey = passwords.openmoviedb.api_key;
+                    movieKey = passwords.themoviedb.api_key;
 
-                    openKey = $passwords[0].api_key;
-                    movieKey = $passwords[1].api_key;
-                    servername = $passwords[2].servername;
-                    username = $passwords[2].username;
-                    password = $passwords[2].password;
-                    database = $passwords[2].database;
+                    servername = passwords.sql.servername;
 
-                    //document.getElementById("latest").innerText = openKey;
+                    username = passwords.sql.username;
+                   password = passwords.sql.password;
+
+                    database = passwords.sql.database;
+
+                    hasOneDayPassed();
+                    loadMovies();
+
                 }
             }
         });
 
     }
 
-    //loadMovies();
     loadPasswords();
-    //getUpcomingMovies();
-
 
     function createRating(imdb, tomatoes, metacritic){
 
@@ -122,7 +123,7 @@
         var upcomingMovies = {
             "async": true,
             "crossDomain": true,
-            "url": "https://api.themoviedb.org/3/movie/upcoming?page=1&language=en-US&api_key=" + $movieKey,
+            "url": "https://api.themoviedb.org/3/movie/upcoming?page=1&language=en-US&api_key=" + movieKey,
             "method": "GET",
             "headers": {},
             "data": "{}"
@@ -135,53 +136,30 @@
 
             for(i in response.results){
 
-                var last = false;
-                if(i  == (size)){
-                    last = true;
-                }
-
                 var title = response.results[i].title;
 
                 $.ajax({
                     type: "POST",
-                    data: {"title":title},
-                    url: "exists-upcoming.php",
+                    data: {"servername":servername,"username":username, "password":password, "database":database, "function":"shouldAddUpcoming","title":title},
+                    url: "sql.php",
                     success: function(data){
                         if(data[0] == 0){
-                            var $test = data.slice(1);
-
-                            addToDatabase($test);
+                            var movie = data.slice(1);
+                            addToDatabase(movie);
                         }
                     }
                 });
-
-
             }
         });
 
     }
 
-    /* Does not work as function returns before AJAX is done.
-    function exists(title){
-
-        $.ajax({
-            type: "POST",
-            data: {"title":title},
-            url: "exists-upcoming.php",
-            success: function(data){
-                callback(data);
-            }
-        });
-
-    }
-    */
-
-    function addToDatabase(title){
+    function addMovie(title){
 
         var openDatabase = {
             "async": true,
             "crossDomain": true,
-            "url": "http://www.omdbapi.com/?t='" + title + "'&type=movie&y=2018&plot=short&apikey=" + $openKey,
+            "url": "http://www.omdbapi.com/?t='" + title + "'&type=movie&y=2018&plot=short&apikey=" + openKey,
             "method": "GET",
             "headers": {},
             "data": "{}"
@@ -212,16 +190,18 @@
                     poster = movie.Poster.slice(33);
                 }
                 var summary = movie.Plot;
-                //str = JSON.stringify(response, null, 4);
+
+                var upcoming = 0;
+                if(isUpcoming(release_date)){
+                    upcoming = 1;
+                }
 
                    $.ajax({
                         type: "POST",
-                        data: {"id":id, "title": title, "release_date":release_date, "year":year, "genre":genre, "imdb":imdb, "tomatoes":tomatoes, "metacritic":metacritic, "dvd_release":dvd_release, "runtime":runtime, "poster":poster, "summary":summary},
-                        url: "update-upcoming.php",
+                        data: {"servername":servername,"username":username, "password":password, "database":database, "function":"addMovie", "id":id, "title": title, "release_date":release_date, "year":year, "genre":genre, "imdb":imdb, "tomatoes":tomatoes, "metacritic":metacritic, "dvd_release":dvd_release, "runtime":runtime, "poster":poster, "summary":summary, "upcoming":upcoming},
+                        url: "sql.php",
                         success: function (data) {
-
-                            //document.getElementById("latest").innerText +=  " Added " + data;
-
+                           // loadMovies();
                         }
                     });
 
@@ -232,11 +212,10 @@
 
     function loadMovies(){
 
-
         $.ajax({
-            type: "GET",
-            data: {},
-            url: "get-upcoming.php",
+            type: "POST",
+            data: {"servername":servername,"username":username, "password":password, "database":database, "function":"getUpcoming"},
+            url: "sql.php",
             success: function(moviesRAW) {
 
                 if (moviesRAW !== null) {
@@ -257,66 +236,96 @@
 
     }
 
+   function hasOneDayPassed(){
 
-    function displayMovies(movies){
+        var date = new Date();
 
-        document.getElementById("latest").innerText += JSON.stringify(movies[0], null, 4);
 
-        for(i in movies){
+       $.ajax({
+           type: "POST",
+           data: {"servername":servername,"username":username, "password":password, "database":database, "function":"lastUpcomingCheck"},
+           url: "sql.php",
+           success: function(lastDate) {
 
-            var imageSrc = "https://image.tmdb.org/t/p/w300_and_h450_bestv2" + movies[i].poster_path;
-            document.getElementById("latest").innerHTML += "<div class='row' id='" + i + "' style='margin-bottom:1.2em;" +
-                "'></div>";
+               var last = new Date(lastDate);
 
-            document.getElementById(i).innerHTML +=  "<div class='col-sm-3'><span class='poster'><img src=" + movies[i].Poster + "></span> </div><div class='col-sm-7'><div class='row' id='title'><b>" + movies[i].Title + " (" + movies[i].Year + ")</b></div> <div class='row'>" + createRating(movies[i].vote_average) + "</div><div class='row'>Hello</div></div>";
-            //getTrailer(movies[i].id, i);
-        }
+               if(date.getFullYear() > last.getFullYear()){
+                   runOncePerDay();
+               }else if(date.getFullYear() >= last.getFullYear() && date.getMonth() > last.getMonth()){
+                   runOncePerDay();
+               }else if(date.getFullYear() >= last.getFullYear() && date.getMonth() >= last.getMonth() && date.getDate() > last.getDate()){
+                    runOncePerDay();
+               }
+           }
+       });
+
     }
-   // movies = [];
 
-  /*  function getMovies(title, last){
+    function runOncePerDay(){
+
+            getUpcomingMovies();
+            purgeUpcoming();
+
+            var date = new Date().toLocaleDateString();
+
+            $.ajax({
+                type: "POST",
+                data: {"servername":servername,"username":username, "password":password, "database":database, "function":"updateUpcomingCheck", "date":date},
+                url: "sql.php",
+                success: function(data) {
+
+                }
+            });
+    }
+
+    function purgeUpcoming(){
+
+        $.ajax({
+            type: "POST",
+            data: {"servername":servername,"username":username, "password":password, "database":database, "function":"getUpcoming"},
+            url: "sql.php",
+            success: function(moviesRAW) {
+
+                if (moviesRAW !== null) {
+
+                    var movies = JSON.parse(moviesRAW);
+
+                    for (i in movies) {
+
+                        if(!isUpcoming(movies[i].release_date)){
+
+                            $.ajax({
+                                type: "POST",
+                                data: {"servername":servername,"username":username, "password":password, "database":database, "function":"removeUpcomingTag", "id":movies[i].id},
+                                url: "sql.php",
+                                success: function(success) {
+                                }
+                            });
 
 
-        var deets = {
-            "async": true,
-            "crossDomain": true,
-            "url": "http://www.omdbapi.com/?t=" + title + "&type=movie&y=2018&plot=full&apikey=4b4d9be1",
-            "method": "GET",
-            "headers": {},
-            "data": "{}"
-        }
+                        }
 
-        $.ajax(deets).done(function (response) {
-            //str = JSON.stringify(response, null, 4);
-            if (response.Response) {
-
-                movies.push(response);
-
-                if (last) {
-                    loadMovies(movies);
+                    }
                 }
             }
         });
 
-    } */
-
-   /* function hasOneDayPassed(){
-        var date = new Date().toLocaleDateString();
-
-        if() {
-            return false;
-        }
-
-
-        return true;
     }
 
-    // some function which should run once a day
-    function runOncePerDay(){
-        if( !hasOneDayPassed()){
-            return false;
+    function isUpcoming(date){
+
+        var today = new Date();
+        var movieRelease = new Date(date);
+
+        if(movieRelease.getFullYear() > today.getFullYear()){
+            return true;
+        }else if(movieRelease.getFullYear() >= today.getFullYear() && movieRelease.getMonth() > today.getMonth()){
+            return true;
+        }else if(movieRelease.getFullYear() >= today.getFullYear() && movieRelease.getMonth() >= today.getMonth() && movieRelease.getDate() >= today.getDate()){
+         return true;
         }
-    }*/
+        return false;
+    }
 
 </script>
 
