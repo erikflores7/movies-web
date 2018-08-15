@@ -27,6 +27,7 @@ $runtime = "";
 $poster = "";
 $summary = "";
 $upcoming = 0;
+    $latest = 0;
 
 $conn = new PDO("mysql:host=$servername;dbname=$dbname;", $username, $password);
 
@@ -59,10 +60,36 @@ switch ($function){
         $poster = $_POST['poster'];
         $summary = $_POST['summary'];
         $upcoming = $_POST['upcoming'];
+        $latest = $_POST['latest'];
         addMovie($conn);
+        break;
+    case "updateMovie":
+        $id = $_POST['id'];
+        $year = $_POST['year'];
+        $release_date = $_POST['release_date'];
+        $genre = $_POST['genre'];
+        $imdb = $_POST['imdb'];
+        $tomatoes = $_POST['tomatoes'];
+        $metacritic = $_POST['metacritic'];
+        $dvd_release = $_POST['dvd_release'];
+        $runtime = $_POST['runtime'];
+        $poster = $_POST['poster'];
+        $summary = $_POST['summary'];
+        $upcoming = $_POST['upcoming'];
+        $latest = $_POST['latest'];
+        updateMovie($conn);
         break;
     case "removeUpcomingTag":
         removeUpcomingTag($conn, $_POST['id']);
+        break;
+    case "removeLatestTag":
+        removeLatestTag($conn, $_POST['id']);
+        break;
+    case "getLatest":
+        getLatestList($conn);
+        break;
+    case "getMissingIMDB":
+        getMissingIMDB($conn);
         break;
 
 }
@@ -71,9 +98,24 @@ function getUpcomingList($conn){
 
     try {
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $result = $conn->prepare("SELECT *
-FROM movies
-WHERE upcoming = '1'");
+        $result = $conn->prepare("SELECT * FROM movies WHERE upcoming = '1'");
+
+        $result->execute();
+        $return = $result->fetchAll();
+
+        echo json_encode($return);
+
+    }
+    catch(PDOException $e)
+    {    echo $e->getMessage();
+    }
+}
+
+function getLatestList($conn){
+
+    try {
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $result = $conn->prepare("SELECT * FROM movies WHERE latest = '1'");
 
         $result->execute();
         $return = $result->fetchAll();
@@ -92,9 +134,7 @@ WHERE upcoming = '1'");
     function shouldAddUpcoming($conn, $title){
         try{
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $result = $conn->prepare("SELECT 1
-FROM movies
-WHERE title = '$title' AND upcoming = 1");
+            $result = $conn->prepare("SELECT 1 FROM movies WHERE title = '$title' AND upcoming = 1");
             $result->execute();
             $return = $result->fetchAll();
 
@@ -115,9 +155,7 @@ WHERE title = '$title' AND upcoming = 1");
 
         try{
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $result = $conn->prepare("SELECT *
-FROM movies
-WHERE id='date'");
+            $result = $conn->prepare("SELECT * FROM movies WHERE id='date'");
             $result->execute();
             $return = $result->fetchAll();
 
@@ -133,9 +171,7 @@ WHERE id='date'");
 
         try{
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $result = $conn->prepare("UPDATE movies
-SET release_date = '$date'
-WHERE id = 'date'");
+            $result = $conn->prepare("UPDATE movies SET release_date = '$date' WHERE id = 'date'");
             $result->execute();
 
         }catch(PDOException $e) {
@@ -147,14 +183,14 @@ WHERE id = 'date'");
 
     function addMovie($conn){
 
-        global $id, $title, $release_date, $year, $genre, $imdb, $tomatoes, $metacritic, $dvd_release, $runtime, $poster, $summary, $upcoming;
+        global $id, $title, $release_date, $year, $genre, $imdb, $tomatoes, $metacritic, $dvd_release, $runtime, $poster, $summary, $upcoming, $latest;
 
         try {
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             if(isset($id)){
-                $sql = $conn->prepare("INSERT INTO movies (id, title, release_date, year, genre, imdb, tomatoes, metacritic, dvd_release, runtime, poster, summary, upcoming)
-    VALUES (:id, :title, :release_date, :year, :genre, :imdb, :tomatoes, :metacritic, :dvd_release, :runtime, :poster, :summary, :upcoming)");
+                $sql = $conn->prepare("INSERT INTO movies (id, title, release_date, year, genre, imdb, tomatoes, metacritic, dvd_release, runtime, poster, summary, upcoming, latest)
+    VALUES (:id, :title, :release_date, :year, :genre, :imdb, :tomatoes, :metacritic, :dvd_release, :runtime, :poster, :summary, :upcoming, :latest)");
 
                 $sql->bindParam(':id', $id);
                 $sql->bindParam(':title', $title);
@@ -169,7 +205,7 @@ WHERE id = 'date'");
                 $sql->bindParam(':poster',$poster);
                 $sql->bindParam(':summary',$summary);
                 $sql->bindParam(':upcoming', $upcoming);
-
+                $sql->bindParam(':latest', $latest);
 
                 $sql->execute();
             }
@@ -185,9 +221,7 @@ WHERE id = 'date'");
 
         try{
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $result = $conn->prepare("UPDATE movies
-SET upcoming = 0
-WHERE id = '$imdbid'");
+            $result = $conn->prepare("UPDATE movies SET upcoming = 0 WHERE id = '$imdbid'");
             $result->execute();
 
         }catch(PDOException $e) {
@@ -197,8 +231,69 @@ WHERE id = '$imdbid'");
     }
 
 
+    function removeLatestTag($conn, $imdbid){
+
+        try {
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $result = $conn->prepare("UPDATE movies SET latest = '0' WHERE id = '$imdbid'");
+            $result->execute();
+
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    function getMissingIMDB($conn){
+
+        try{
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $result = $conn->prepare("SELECT * FROM movies WHERE imdb='N/A'");
+            $result->execute();
+            $return = $result->fetchAll();
+
+            echo json_encode($return);
+
+        }catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+
+    }
+
+    function updateMovie($conn){
+
+
+        global $id, $release_date, $year, $genre, $imdb, $tomatoes, $metacritic, $dvd_release, $runtime, $poster, $summary, $upcoming, $latest;
+
+        try {
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            if(isset($id)){
+                $sql = $conn->prepare("UPDATE movies SET release_date=:release_date, year=:year, genre=:genre, imdb=:imdb, tomatoes=:tomatoes, metacritic=:metacritic, dvd_release=:dvd_release, runtime=:runtime, poster=:poster, summary=:summary, upcoming=:upcoming, latest=:latest WHERE id=:id");
+
+                $sql->bindParam(':id', $id);
+                $sql->bindParam(':release_date', $release_date);
+                $sql->bindParam(':year',$year);
+                $sql->bindParam(':genre',$genre);
+                $sql->bindParam(':imdb',$imdb);
+                $sql->bindParam(':tomatoes',$tomatoes);
+                $sql->bindParam(':metacritic',$metacritic);
+                $sql->bindParam(':dvd_release',$dvd_release);
+                $sql->bindParam(':runtime',$runtime);
+                $sql->bindParam(':poster',$poster);
+                $sql->bindParam(':summary',$summary);
+                $sql->bindParam(':upcoming', $upcoming);
+                $sql->bindParam(':latest', $latest);
+
+                $sql->execute();
+            }
+        }
+        catch(PDOException $e)
+        {
+            echo $e->getMessage();
+        }
+
+    }
+
     $conn = null;
-
-
 
 ?>

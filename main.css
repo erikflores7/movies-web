@@ -42,3 +42,15 @@
     #releaseDate{
         font-size: 14px;
     }
+
+    .metacritic{
+        padding: 1px 4px;
+        color: #fff;
+        text-align: center;
+        display: inline-block;
+        background-color: #61c74f;
+    }
+
+    .metacritic.ok{
+        background-color: #ffcc33;
+    }
