@@ -7,11 +7,14 @@ password = "";
 database = "";
 
 // Loads passwords from file if not already and load page/check for updates
-function initiate(tag) {
+function initiate(tag, title) {
 
     if (openKey !== "") {
-        loadMovies(tag);
-        document.getElementById("latest").innerText = "OK";
+        if(tag === 'search'){
+            search(title);
+            return;
+        }
+        loadMovies(tag, title);
     }else{
     $.ajax({
         type: "GET",
@@ -31,7 +34,12 @@ function initiate(tag) {
                 database = passwords.sql.database;
 
                 hasOneDayPassed();
-                loadMovies(tag);
+
+                if(tag === 'search'){
+                    search(title);
+                   return;
+                }
+               loadMovies(tag, title);
 
             }
         }
@@ -51,7 +59,7 @@ function createRating(imdb, tomatoes, metacritic){
         stars += "<li class='imdb'><span class='glyphicon glyphicon-star' aria-hidden='true'></span> N/A </li>";
     }
     if(tomatoes !== "") {
-        stars += "<li class='tomatoes'><a href='https://www.rottentomatoes.com/m/the_meg'><img src='https://www.rottentomatoes.com/assets/pizza-pie/images/icons/global/new-fresh.587bf3a5e47.png' style='max-height: 16px'> " + tomatoes + "</a></li>";
+        stars += "<li class='tomatoes'><img src='https://www.rottentomatoes.com/assets/pizza-pie/images/icons/global/new-fresh.587bf3a5e47.png' style='max-height: 16px'> " + tomatoes + "</li>";
     }else{
         stars += "<li class='tomatoes'><img src='https://www.rottentomatoes.com/assets/pizza-pie/images/icons/global/new-fresh.587bf3a5e47.png' style='max-height: 16px'>  N/A </li>";
     }
@@ -96,23 +104,27 @@ function getUpcomingMovies(){
                 success: function(data){
                     if(data[0] == 0){
                         var movie = data.slice(1);
-                        addMovie(movie);
+                        addMovie(movie, true);
                     }
                 }
             });
         }
     });
-
 }
 
 // Adds movie by title, used after using getUpcoming as that returns title
 // Adding by other criteria to be added
-function addMovie(title){
+function addMovie(title, upcoming){
+
+    var year = "";
+    if(upcoming){
+        year = "&y=2018";
+    }
 
     var openDatabase = {
         "async": true,
         "crossDomain": true,
-        "url": "http://www.omdbapi.com/?t='" + title + "'&type=movie&y=2018&plot=short&apikey=" + openKey,
+        "url": "http://www.omdbapi.com/?t='" + title + "'&type=movie" + year + "&plot=short&apikey=" + openKey,
         "method": "GET",
         "headers": {},
         "data": "{}"
@@ -122,6 +134,7 @@ function addMovie(title){
 
         if (movie.Response === "True" && movie.imdbID !== null) {
 
+            title = movie.Title;
             var id = movie.imdbID;
             var release_date = movie.Released;
             var year = movie.Year;
@@ -158,10 +171,16 @@ function addMovie(title){
                 data: {"servername":servername,"username":username, "password":password, "database":database, "function":"addMovie", "id":id, "title": title, "release_date":release_date, "year":year, "genre":genre, "imdb":imdb, "tomatoes":tomatoes, "metacritic":metacritic, "dvd_release":dvd_release, "runtime":runtime, "poster":poster, "summary":summary, "upcoming":upcoming, "latest":latest},
                 url: "sql.php",
                 success: function (data) {
-                    // loadMovies();
+                    if(upcoming){
+                        loadMovies("getUpcoming");
+                    }else{
+                        loadMovies("search", title);
+                    }
                 }
             });
 
+        }else{
+            document.getElementById("latest").innerHTML = "<h1> Movie '<b>" + title + "'</b> not found!</h1>";
         }
 
     });
@@ -170,22 +189,23 @@ function addMovie(title){
 // Load movies, currently getUpcoming and getLatest are options
 // edits HTML to display movies returned from list
 // (Could be cleaned up)
-function loadMovies(tag){
+function loadMovies(tag, title){
 
     $.ajax({
         type: "POST",
-        data: {"servername":servername,"username":username, "password":password, "database":database, "function": tag},
+        data: {"servername":servername,"username":username, "password":password, "database":database, "function": tag, "search": title},
         url: "sql.php",
         success: function(moviesRAW) {
 
-            if (moviesRAW !== null) {
+            if (moviesRAW !== null && moviesRAW !== "[]") {
+
                 var movies = JSON.parse(moviesRAW);
 
                 for (i in movies) {
                     if (movies[i].poster !== "") {
-                        document.getElementById("latest").innerHTML += "<div class='row' id='" + i + "' style='margin-bottom:1.2em;" + "'></div>";
+                        document.getElementById("latest").innerHTML += "<div class='row row-equal-height movie' id='" + i + "'></div>";
 
-                        document.getElementById(i).innerHTML += "<div class='col-sm-3'><span class='poster'><img src='https://m.media-amazon.com/images" + movies[i].poster + "'></span> </div><div class='col-sm-4'><div class='row' id='title'><b>" + movies[i].title + " (" + movies[i].year + ")</b></div> <div class='row'>" + createRating(movies[i].imdb, movies[i].tomatoes, movies[i].metacritic) + "<div class='col-sm-6' id='releaseDate'>" + movies[i].runtime + "&nbsp;|&nbsp;&nbsp;" + movies[i].release_date + "</div></div><div class='row'>" + movies[i].genre + "</div><div class='row'><br>&nbsp;&nbsp;" + movies[i].summary + "</div></div>";
+                        document.getElementById(i).innerHTML += "<div class='col-sm-3 poster'><span><img src='https://m.media-amazon.com/images" + movies[i].poster + "'></span> </div><div class='col-sm-4 info'><div class='row' id='title'><b>" + movies[i].title + " (" + movies[i].year + ")</b></div> <div class='row'>" + createRating(movies[i].imdb, movies[i].tomatoes, movies[i].metacritic) + "<div class='col-sm-6' id='releaseDate'>" + movies[i].runtime + "&nbsp;|&nbsp;&nbsp;" + movies[i].release_date + "</div></div><div class='row summary'>&nbsp;&nbsp;" + movies[i].summary + "</div><div class='row addInfo'> Genre: " + movies[i].genre + "<br> Physical Release: " + movies[i].dvd_release + "</div>" +  getButtons() + "</div>" + trailer(movies[i].id) + "</div>";
                     }
 
                 }
@@ -268,9 +288,7 @@ function purgeUpcoming(){
                             success: function(success) {
                             }
                         });
-
                     }
-
                 }
             }
         }
@@ -407,3 +425,35 @@ function updateMissing(){
         }
     });
 }
+
+function getButtons(){
+    var buttons = "<div class='row buttons'><button class='btn btn-primary'>Watch Trailer</button>";
+        buttons += "<button class='btn btn-primary disabled'>Buy Tickets</button>";
+        buttons += "</div>";
+        return buttons;
+}
+
+function trailer(id){
+
+     var video = "<video width='320' height='240' controls> <source src='' type='video/mp4'> Your browser does not support this video. </video>";
+    return "";
+}
+
+
+    // addMovie will search if movie exists in database, if not it will look up keyword and add it
+    // Changed addMovie to load movies once again after adding new, reset old loaded movies
+    // Might need to redirect to home page/movie page instead of staying on Latest/Upcoming
+    function search(search){
+
+    document.getElementById("latest").innerText = "";
+     addMovie(search, false);
+    }
+
+    document.getElementById('search').addEventListener('submit',function(e) {
+    e.preventDefault();
+
+    var keywords = document.getElementById('search2').value;
+    if(keywords != null && keywords !== ""){
+    initiate("search", keywords);
+    }
+    });

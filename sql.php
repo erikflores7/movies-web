@@ -91,6 +91,9 @@ switch ($function){
     case "getMissingIMDB":
         getMissingIMDB($conn);
         break;
+    case "search":
+        search($conn, $_POST['search']);
+        break;
 
 }
 
@@ -289,6 +292,24 @@ function getLatestList($conn){
         }
         catch(PDOException $e)
         {
+            echo $e->getMessage();
+        }
+
+    }
+
+    function search($conn, $search){
+
+
+        try {
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $result = $conn->prepare("SELECT * FROM movies WHERE lower(title) LIKE lower('%$search%');");
+
+            $result->execute();
+            $list = $result->fetchAll();
+
+            echo json_encode($list);
+
+        } catch (PDOException $e) {
             echo $e->getMessage();
         }
 
