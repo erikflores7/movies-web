@@ -5,8 +5,7 @@ currently Upcoming and Latest pulled from 2 movie APIs
 Using: HTML, Bootstrap, CSS, JavaScript/JQuery/Ajax, PHP, and SQL
 
 TODO:
- - improve search function (Add option to search by year,
- make process more efficient, add more movies when searched)
+ - improve search function (make process more efficient, add sorting)
  - make everything look better(code and actual movie display)
  - add more lists
  - watch trailer/buy tickets ?
