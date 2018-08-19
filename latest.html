@@ -27,17 +27,17 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="#">Recommended <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Rated</a></li>
+                <li><a href="upcoming.html">Upcoming <span class="sr-only">(current)</span></a></li>
+                <li><a href="latest.html">Latest</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Movies <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Latest </a></li>
                         <li><a href="#">Top Rated</a></li>
-                        <li><a href="upcoming.html">Upcoming </a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#">Horror </a></li>
-                        <li><a href="#">Comedy </a></li>
+                        <li><a href="genre.html?genre=Horror">Horror </a></li>
+                        <li><a href="genre.html?genre=Comedy">Comedy </a></li>
+                        <li><a href="genre.html?genre=Action">Action </a></li>
+                        <li><a href="genre.html?genre=Animation">Animation </a></li>
                     </ul>
                 </li>
             </ul>
@@ -59,9 +59,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
     <script>
-
         initiate("getLatest");
-
     </script>
 
 </body>

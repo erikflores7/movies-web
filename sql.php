@@ -88,48 +88,70 @@ switch ($function){
     case "getLatest":
         getLatestList($conn);
         break;
+    case "getByGenre":
+        getByGenre($conn, $_POST['search']);
+        break;
     case "getMissingIMDB":
         getMissingIMDB($conn);
         break;
     case "search":
-        search($conn, $_POST['search']);
+        search($conn, $_POST['search'], $_POST['year']);
         break;
 
 }
 
-function getUpcomingList($conn){
+    function getUpcomingList($conn){
 
-    try {
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $result = $conn->prepare("SELECT * FROM movies WHERE upcoming = '1'");
+        try {
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $result = $conn->prepare("SELECT * FROM movies WHERE upcoming = '1'");
 
-        $result->execute();
-        $return = $result->fetchAll();
+            $result->execute();
+            $return = $result->fetchAll();
 
-        echo json_encode($return);
+            echo json_encode($return);
+            return;
 
+        }
+        catch(PDOException $e)
+        {    echo $e->getMessage();
+        }
     }
-    catch(PDOException $e)
-    {    echo $e->getMessage();
+
+    function getLatestList($conn){
+
+        try {
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $result = $conn->prepare("SELECT * FROM movies WHERE latest = '1'");
+
+            $result->execute();
+            $return = $result->fetchAll();
+
+            echo json_encode($return);
+            return;
+        }
+        catch(PDOException $e)
+        {    echo $e->getMessage();
+        }
     }
-}
 
-function getLatestList($conn){
+    function getByGenre($conn, $genre){
 
-    try {
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $result = $conn->prepare("SELECT * FROM movies WHERE latest = '1'");
+        try {
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $result = $conn->prepare("SELECT * FROM movies WHERE lower(genre) LIKE lower('%$genre%');");
 
-        $result->execute();
-        $return = $result->fetchAll();
+            $result->execute();
+            $return = $result->fetchAll();
 
-        echo json_encode($return);
-
+            echo json_encode($return);
+            return;
+        }
+        catch(PDOException $e)
+        {    echo $e->getMessage();
+            return;
+        }
     }
-    catch(PDOException $e)
-    {    echo $e->getMessage();
-    }
-}
 
 
 // Uses title, Upcoming list does not return imdbID, to check if exists in database AND is to be released
@@ -144,13 +166,38 @@ function getLatestList($conn){
             if(empty($return)){
                 echo 0;
                 echo $title;
+                return;
             }else{
                 echo $return;
+                return;
             }
             //echo "Movie '".$title."' already exists!";
         }catch(PDOException $e) {
             echo $e->getMessage();
             //echo $sql . "<br>" . $e->getMessage();
+            return;
+        }
+    }
+
+    // Checks if database contains the imdbID
+    function movieExists($conn, $id){
+        try{
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $result = $conn->prepare("SELECT 1 FROM movies WHERE id = '$id'");
+            $result->execute();
+            $return = $result->fetchAll();
+
+            if(empty($return)){
+                echo false;
+                return;
+            }else{
+                echo true;
+                return;
+            }
+            //echo "Movie '".$title."' already exists!";
+        }catch(PDOException $e) {
+            echo $e->getMessage();
+            return;
         }
     }
 
@@ -163,9 +210,10 @@ function getLatestList($conn){
             $return = $result->fetchAll();
 
             echo $return[0]['release_date'];
-
+            return;
         }catch(PDOException $e) {
             echo $e->getMessage();
+            return;
         }
 
     }
@@ -176,48 +224,55 @@ function getLatestList($conn){
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $result = $conn->prepare("UPDATE movies SET release_date = '$date' WHERE id = 'date'");
             $result->execute();
-
+            return;
         }catch(PDOException $e) {
             echo $e->getMessage();
+            return;
         }
-
-
     }
 
-    function addMovie($conn){
+
+    // Check if movie ID does not already exist in database
+    function addMovie($conn)
+    {
 
         global $id, $title, $release_date, $year, $genre, $imdb, $tomatoes, $metacritic, $dvd_release, $runtime, $poster, $summary, $upcoming, $latest;
+
+        if (!movieExists($conn, $id)) {
 
         try {
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            if(isset($id)){
+            if (isset($id)) {
                 $sql = $conn->prepare("INSERT INTO movies (id, title, release_date, year, genre, imdb, tomatoes, metacritic, dvd_release, runtime, poster, summary, upcoming, latest)
     VALUES (:id, :title, :release_date, :year, :genre, :imdb, :tomatoes, :metacritic, :dvd_release, :runtime, :poster, :summary, :upcoming, :latest)");
 
                 $sql->bindParam(':id', $id);
                 $sql->bindParam(':title', $title);
                 $sql->bindParam(':release_date', $release_date);
-                $sql->bindParam(':year',$year);
-                $sql->bindParam(':genre',$genre);
-                $sql->bindParam(':imdb',$imdb);
-                $sql->bindParam(':tomatoes',$tomatoes);
-                $sql->bindParam(':metacritic',$metacritic);
-                $sql->bindParam(':dvd_release',$dvd_release);
-                $sql->bindParam(':runtime',$runtime);
-                $sql->bindParam(':poster',$poster);
-                $sql->bindParam(':summary',$summary);
+                $sql->bindParam(':year', $year);
+                $sql->bindParam(':genre', $genre);
+                $sql->bindParam(':imdb', $imdb);
+                $sql->bindParam(':tomatoes', $tomatoes);
+                $sql->bindParam(':metacritic', $metacritic);
+                $sql->bindParam(':dvd_release', $dvd_release);
+                $sql->bindParam(':runtime', $runtime);
+                $sql->bindParam(':poster', $poster);
+                $sql->bindParam(':summary', $summary);
                 $sql->bindParam(':upcoming', $upcoming);
                 $sql->bindParam(':latest', $latest);
 
                 $sql->execute();
+                return;
+            }else{
+                return;
             }
-        }
-        catch(PDOException $e)
-        {
+        } catch (PDOException $e) {
             echo $e->getMessage();
+            return;
         }
-
+    }
+        return;
     }
 
     function removeUpcomingTag($conn, $imdbid){
@@ -226,7 +281,7 @@ function getLatestList($conn){
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $result = $conn->prepare("UPDATE movies SET upcoming = 0 WHERE id = '$imdbid'");
             $result->execute();
-
+            return;
         }catch(PDOException $e) {
             echo $e->getMessage();
         }
@@ -240,7 +295,7 @@ function getLatestList($conn){
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $result = $conn->prepare("UPDATE movies SET latest = '0' WHERE id = '$imdbid'");
             $result->execute();
-
+            return;
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
@@ -255,7 +310,7 @@ function getLatestList($conn){
             $return = $result->fetchAll();
 
             echo json_encode($return);
-
+            return;
         }catch(PDOException $e) {
             echo $e->getMessage();
         }
@@ -288,29 +343,36 @@ function getLatestList($conn){
                 $sql->bindParam(':latest', $latest);
 
                 $sql->execute();
+                return;
             }
         }
         catch(PDOException $e)
         {
             echo $e->getMessage();
+            return;
         }
 
     }
 
-    function search($conn, $search){
+    function search($conn, $search, $y){
 
+        $year = "";
+        if($y !== ""){
+            $year = "AND year='$y'";
+        }
 
         try {
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $result = $conn->prepare("SELECT * FROM movies WHERE lower(title) LIKE lower('%$search%');");
+            $result = $conn->prepare("SELECT * FROM movies WHERE lower(title) LIKE lower('%$search%') $year;");
 
             $result->execute();
             $list = $result->fetchAll();
 
             echo json_encode($list);
-
+            return;
         } catch (PDOException $e) {
             echo $e->getMessage();
+            return;
         }
 
     }

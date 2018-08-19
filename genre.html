@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
+    <title>Moovies</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" type="text/css" href="main.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <title>Upcoming Movies</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
 </head>
-<body>
 
+<body>
 
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -21,18 +21,20 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html">Moovies </a>
+            <a class="navbar-brand active" href="index.html">Moovies </a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="upcoming.html">Upcoming <span class="sr-only">(current)</span></a></li>
-                <li><a href="latest.html">Latest</a></li>
+                <li><a href="#">Recommended <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">Rated</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Movies <span class="caret"></span></a>
                     <ul class="dropdown-menu">
+                        <li><a href="latest.html">Latest </a></li>
                         <li><a href="#">Top Rated</a></li>
+                        <li><a href="upcoming.html">Upcoming </a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="genre.html?genre=Horror">Horror </a></li>
                         <li><a href="genre.html?genre=Comedy">Comedy </a></li>
@@ -41,23 +43,37 @@
                     </ul>
                 </li>
             </ul>
-            <form class="navbar-form navbar-right" onsubmit="" id="search">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Find Movies..." id="search2">
-                </div>
-                <button type="submit" class="btn btn-primary">Search</button>
-            </form>
 
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
 
-<div class="container" id="latest"></div>
+<header class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-4">
+        <h1 id="movieType">HORROR Movies</h1>
+    </div>
+</header>
+
+<div id="latest" class="container">
+
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="sql.js"></script>
-<script> initiate("getUpcoming"); </script>
+<script>
+
+    let params = new URL(document.location).searchParams;
+    if(params.has("genre")){
+        initiate("getByGenre", params.get("genre"));
+        document.getElementById("movieType").innerText = params.get("genre").toUpperCase() + " Movies";
+    }else{
+        initiate("getByGenre", "Horror");
+    }
+
+</script>
 
 </body>
+
 </html>

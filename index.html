@@ -21,70 +21,53 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Moovies </a>
+            <a class="navbar-brand active" href="index.html">Moovies </a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Recommended <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Rated</a></li>
+                <li><a href="upcoming.html">Upcoming <span class="sr-only">(current)</span></a></li>
+                <li><a href="latest.html">Latest</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Movies <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="latest.html">Latest </a></li>
                         <li><a href="#">Top Rated</a></li>
-                        <li><a href="upcoming.html">Upcoming </a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#">Horror </a></li>
-                        <li><a href="#">Comedy </a></li>
+                        <li><a href="genre.html?genre=Horror">Horror </a></li>
+                        <li><a href="genre.html?genre=Comedy">Comedy </a></li>
+                        <li><a href="genre.html?genre=Action">Action </a></li>
+                        <li><a href="genre.html?genre=Animation">Animation </a></li>
+
                     </ul>
                 </li>
             </ul>
-            <form class="navbar-form navbar-right" onsubmit="return false" id="search">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Find Movies..." id="search2">
-                </div>
-                <button type="submit" class="btn btn-primary">Search</button>
-            </form>
+
 
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
 
-<header class="row"><h1>Upcoming Movies</h1></header>
-
-<div class="container">
-    <div class="row">
-        <div class="col-sm-3">
-            <img style="max-width: 100%" src="https://i.ytimg.com/vi/lJTRVX9R5EA/maxresdefault.jpg">
-        </div>
-        <div class="col-sm-7">
-            <div class="row"><b>Title (Year) </b></div>
-            <div class="row">
-                <ul class="list-inline">
-                    <li>imdb</li>
-                    <li>rotten tomato(e)s</li>
-                    <li>metacritic</li>
-                </ul>
-            </div>
-            <div class="row">
-                <ul class="list-inline">
-                    <li>genre</li>
-                    <li>runtime</li>
-                    <li>release date</li>
-                </ul>
-            </div>
-            <div class="row">Summary and stuff
-                <br>
-                <br>
-            </div>
-            <div class="row">
-                Buy Tickets/Rate/Trailer
-            </div>
-
-        </div>
+<header class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-4">
+    <h1>Discover Movies</h1>
     </div>
+</header>
+<br>
+<div class="row">
+
+    <div class="col-sm-2"></div>
+    <form onsubmit="return false" id="search">
+        <div class="col-sm-5 form-group">
+            <input type="text" class="form-control" placeholder="Find Movies..." id="search2">
+        </div>
+        <div class="col-sm-1 form-group">
+            <input type="text" class="form-control" placeholder="Year" id="search3">
+        </div>
+        <button type="submit" class="col-sm-1 btn btn-primary">Search</button>
+    </form>
+
 </div>
 
 <div id="latest" class="container">
@@ -95,6 +78,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
+<script src="sql.js"></script>
+<script> extractSearch(document.location); </script>
 
 </html>
