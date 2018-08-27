@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
 
+<?php
+    session_start();
+?>
+
 <head>
     <title>Moovies</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,14 +31,12 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="#">Recommended <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Rated</a></li>
+                <li><a href="upcoming.html">Upcoming <span class="sr-only">(current)</span></a></li>
+                <li><a href="latest.php">Latest</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Movies <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="latest.html">Latest </a></li>
                         <li><a href="#">Top Rated</a></li>
-                        <li><a href="upcoming.html">Upcoming </a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="genre.html?genre=Horror">Horror </a></li>
                         <li><a href="genre.html?genre=Comedy">Comedy </a></li>

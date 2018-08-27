@@ -6,12 +6,6 @@
  * Time: 9:52 PM
  */
 
-$servername = $_POST['servername'];
-$username = $_POST['username'];
-$password = $_POST['password'];
-$dbname = $_POST['database'];
-
-
 $function = $_POST['function'];
 
 $id = "";
@@ -29,22 +23,37 @@ $summary = "";
 $upcoming = 0;
     $latest = 0;
 
-$conn = new PDO("mysql:host=$servername;dbname=$dbname;", $username, $password);
+    $conn = null;
+
+    function getConnection(){
+
+        global $conn;
+
+        if($conn != null){
+            return $conn;
+        }
+
+        include 'config.php';
+
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        return $conn;
+    }
 
 
 switch ($function){
 
     case "getUpcoming":
-        getUpcomingList($conn);
+        getUpcomingList();
         break;
     case "shouldAddUpcoming":
-        shouldAddUpcoming($conn, $_POST['title']);
+        shouldAddUpcoming($_POST['title']);
         break;
     case "lastUpcomingCheck":
-        getLastUpcomingUpdate($conn);
+        getLastUpcomingUpdate();
         break;
     case "updateUpcomingCheck":
-        updateUpcomingCheck($conn, $_POST['date']);
+        updateUpcomingCheck($_POST['date']);
         break;
     case "addMovie":
         $id = $_POST['id'];
@@ -61,7 +70,7 @@ switch ($function){
         $summary = $_POST['summary'];
         $upcoming = $_POST['upcoming'];
         $latest = $_POST['latest'];
-        addMovie($conn);
+        addMovie();
         break;
     case "updateMovie":
         $id = $_POST['id'];
@@ -77,33 +86,33 @@ switch ($function){
         $summary = $_POST['summary'];
         $upcoming = $_POST['upcoming'];
         $latest = $_POST['latest'];
-        updateMovie($conn);
+        updateMovie();
         break;
     case "removeUpcomingTag":
-        removeUpcomingTag($conn, $_POST['id']);
+        removeUpcomingTag($_POST['id']);
         break;
     case "removeLatestTag":
-        removeLatestTag($conn, $_POST['id']);
+        removeLatestTag($_POST['id']);
         break;
     case "getLatest":
-        getLatestList($conn);
+        getLatestList();
         break;
     case "getByGenre":
-        getByGenre($conn, $_POST['search']);
+        getByGenre($_POST['search']);
         break;
     case "getMissingIMDB":
-        getMissingIMDB($conn);
+        getMissingIMDB();
         break;
     case "search":
-        search($conn, $_POST['search'], $_POST['year']);
+        search($_POST['search']);
         break;
 
 }
 
-    function getUpcomingList($conn){
+    function getUpcomingList(){
 
         try {
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $conn = getConnection();
             $result = $conn->prepare("SELECT * FROM movies WHERE upcoming = '1'");
 
             $result->execute();
@@ -118,10 +127,10 @@ switch ($function){
         }
     }
 
-    function getLatestList($conn){
+    function getLatestList(){
 
         try {
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $conn = getConnection();
             $result = $conn->prepare("SELECT * FROM movies WHERE latest = '1'");
 
             $result->execute();
@@ -135,10 +144,10 @@ switch ($function){
         }
     }
 
-    function getByGenre($conn, $genre){
+    function getByGenre($genre){
 
         try {
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $conn = getConnection();
             $result = $conn->prepare("SELECT * FROM movies WHERE lower(genre) LIKE lower('%$genre%');");
 
             $result->execute();
@@ -156,9 +165,9 @@ switch ($function){
 
 // Uses title, Upcoming list does not return imdbID, to check if exists in database AND is to be released
 // Same title could exist but not recent, reduces omdbapi usage
-    function shouldAddUpcoming($conn, $title){
+    function shouldAddUpcoming($title){
         try{
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $conn = getConnection();
             $result = $conn->prepare("SELECT 1 FROM movies WHERE title = '$title' AND upcoming = 1");
             $result->execute();
             $return = $result->fetchAll();
@@ -180,9 +189,9 @@ switch ($function){
     }
 
     // Checks if database contains the imdbID
-    function movieExists($conn, $id){
+    function movieExists($id){
         try{
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $conn = getConnection();
             $result = $conn->prepare("SELECT 1 FROM movies WHERE id = '$id'");
             $result->execute();
             $return = $result->fetchAll();
@@ -201,10 +210,10 @@ switch ($function){
         }
     }
 
-    function getLastUpcomingUpdate($conn){
+    function getLastUpcomingUpdate(){
 
         try{
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $conn = getConnection();
             $result = $conn->prepare("SELECT * FROM movies WHERE id='date'");
             $result->execute();
             $return = $result->fetchAll();
@@ -218,10 +227,10 @@ switch ($function){
 
     }
 
-    function updateUpcomingCheck($conn, $date){
+    function updateUpcomingCheck($date){
 
         try{
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $conn = getConnection();
             $result = $conn->prepare("UPDATE movies SET release_date = '$date' WHERE id = 'date'");
             $result->execute();
             return;
@@ -233,15 +242,15 @@ switch ($function){
 
 
     // Check if movie ID does not already exist in database
-    function addMovie($conn)
+    function addMovie()
     {
 
         global $id, $title, $release_date, $year, $genre, $imdb, $tomatoes, $metacritic, $dvd_release, $runtime, $poster, $summary, $upcoming, $latest;
 
-        if (!movieExists($conn, $id)) {
+        if (!movieExists($id)) {
 
         try {
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $conn = getConnection();
 
             if (isset($id)) {
                 $sql = $conn->prepare("INSERT INTO movies (id, title, release_date, year, genre, imdb, tomatoes, metacritic, dvd_release, runtime, poster, summary, upcoming, latest)
@@ -275,10 +284,10 @@ switch ($function){
         return;
     }
 
-    function removeUpcomingTag($conn, $imdbid){
+    function removeUpcomingTag($imdbid){
 
         try{
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $conn = getConnection();
             $result = $conn->prepare("UPDATE movies SET upcoming = 0 WHERE id = '$imdbid'");
             $result->execute();
             return;
@@ -289,10 +298,10 @@ switch ($function){
     }
 
 
-    function removeLatestTag($conn, $imdbid){
+    function removeLatestTag($imdbid){
 
         try {
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $conn = getConnection();
             $result = $conn->prepare("UPDATE movies SET latest = '0' WHERE id = '$imdbid'");
             $result->execute();
             return;
@@ -301,10 +310,10 @@ switch ($function){
         }
     }
 
-    function getMissingIMDB($conn){
+    function getMissingIMDB(){
 
         try{
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $conn = getConnection();
             $result = $conn->prepare("SELECT * FROM movies WHERE imdb='N/A'");
             $result->execute();
             $return = $result->fetchAll();
@@ -317,13 +326,13 @@ switch ($function){
 
     }
 
-    function updateMovie($conn){
+    function updateMovie(){
 
 
         global $id, $release_date, $year, $genre, $imdb, $tomatoes, $metacritic, $dvd_release, $runtime, $poster, $summary, $upcoming, $latest;
 
         try {
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $conn = getConnection();
 
             if(isset($id)){
                 $sql = $conn->prepare("UPDATE movies SET release_date=:release_date, year=:year, genre=:genre, imdb=:imdb, tomatoes=:tomatoes, metacritic=:metacritic, dvd_release=:dvd_release, runtime=:runtime, poster=:poster, summary=:summary, upcoming=:upcoming, latest=:latest WHERE id=:id");
@@ -354,15 +363,18 @@ switch ($function){
 
     }
 
-    function search($conn, $search, $y){
+    function search($search){
 
         $year = "";
-        if($y !== ""){
+        if(isset($_POST['year'])) {
+            $y = $_POST['year'];
+            if ($y !== "") {
             $year = "AND year='$y'";
+            }
         }
 
         try {
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $conn = getConnection();
             $result = $conn->prepare("SELECT * FROM movies WHERE lower(title) LIKE lower('%$search%') $year;");
 
             $result->execute();

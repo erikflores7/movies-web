@@ -1,15 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
+<?php
+/**
+ * Created by PhpStorm.
+ * User: erikflores
+ * Date: 8/24/18
+ * Time: 5:45 PM
+ */
+
+include("userData.php");
+
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+    logIn($_POST['userName'], $_POST['password']);
+}
+
+?>
+
+
 <head>
-    <meta charset="UTF-8">
+    <title>Moovies</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" type="text/css" href="main.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <title>Upcoming Movies</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
 </head>
-<body>
 
+<body>
 
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -21,7 +38,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html">Moovies </a>
+            <a class="navbar-brand active" href="index.html">Moovies </a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -38,26 +55,51 @@
                         <li><a href="genre.html?genre=Comedy">Comedy </a></li>
                         <li><a href="genre.html?genre=Action">Action </a></li>
                         <li><a href="genre.html?genre=Animation">Animation </a></li>
+
                     </ul>
                 </li>
             </ul>
-            <form class="navbar-form navbar-right" onsubmit="" id="search">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Find Movies..." id="search2">
-                </div>
-                <button type="submit" class="btn btn-primary">Search</button>
-            </form>
+
 
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
 
-<div class="container" id="latest"></div>
+<header class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-4">
+        <h1>Sign In</h1>
+    </div>
+</header>
+<br>
+
+<div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+
+        <form method="post">
+            <div class="form-group">
+                <label>User Name</label>
+                <input type="text" class="form-control" name="userName" placeholder="Username">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+            </div>
+            <div class="form-check">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+</body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="userData.js"></script>
 <script src="sql.js"></script>
-<script> initiate("getUpcoming"); </script>
 
-</body>
 </html>

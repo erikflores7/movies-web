@@ -1,11 +1,6 @@
 openKey = "";
 movieKey = "";
 
-servername= "";
-username = "";
-password = "";
-database = "";
-
 // Loads passwords from file if not already and load page/check for updates
 function initiate(tag, title, year) {
     printTime("First");
@@ -33,13 +28,6 @@ function initiate(tag, title, year) {
 
                 openKey = passwords.openmoviedb.api_key;
                 movieKey = passwords.themoviedb.api_key;
-
-                servername = passwords.sql.servername;
-
-                username = passwords.sql.username;
-                password = passwords.sql.password;
-
-                database = passwords.sql.database;
 
                 hasOneDayPassed();
 
@@ -111,7 +99,7 @@ function getUpcomingMovies(){
 
             $.ajax({
                 type: "POST",
-                data: {"servername":servername,"username":username, "password":password, "database":database, "function":"shouldAddUpcoming","title":title},
+                data: {"function":"shouldAddUpcoming","title":title},
                 url: "sql.php",
                 success: function(data){
                     if(data[0] == 0){
@@ -168,6 +156,9 @@ function addMovie(title, yea){
             var poster  = "";
             if(movie.Poster !== null){
                 poster = movie.Poster.slice(33);
+                if(!poster.startsWith('/')){
+                    poster = "/" + poster;
+                }
             }
             var summary = movie.Plot;
 
@@ -182,7 +173,7 @@ function addMovie(title, yea){
 
             $.ajax({
                 type: "POST",
-                data: {"servername":servername,"username":username, "password":password, "database":database, "function":"addMovie", "id":id, "title": realTitle, "release_date":release_date, "year":year, "genre":genre, "imdb":imdb, "tomatoes":tomatoes, "metacritic":metacritic, "dvd_release":dvd_release, "runtime":runtime, "poster":poster, "summary":summary, "upcoming":upcoming, "latest":latest},
+                data: {"function":"addMovie", "id":id, "title": realTitle, "release_date":release_date, "year":year, "genre":genre, "imdb":imdb, "tomatoes":tomatoes, "metacritic":metacritic, "dvd_release":dvd_release, "runtime":runtime, "poster":poster, "summary":summary, "upcoming":upcoming, "latest":latest},
                 url: "sql.php",
                 success: function (data) {
                     printTime("Fourth");
@@ -213,7 +204,7 @@ function addMovie(title, yea){
 
         $.ajax({
             type: "POST",
-            data: {"servername":servername,"username":username, "password":password, "database":database, "function": tag, "search": title, "year": y},
+            data: {"function": tag, "search": title, "year": y},
             url: "sql.php",
             success: function(moviesRAW) {
 
@@ -232,10 +223,12 @@ function addMovie(title, yea){
                             style = "style='background-color: ghostwhite'";
                         }
                         if (movies[i].poster !== "") {
-                            document.getElementById("latest").innerHTML += "<div class='row row-equal-height movie' id='" + i + "'" + style + "></div>";
+                            document.getElementById("latest").innerHTML += "<div class='row row-equal-height movie' id='" + movies[i].id + "'" + style + "></div>";
 
-                            document.getElementById(i).innerHTML += "<div class='col-sm-3 poster'><span><img src='https://m.media-amazon.com/images" + movies[i].poster + "' align='right'></span> </div><div class='col-sm-4 info'><div class='row' id='title'><b>" + movies[i].title + " (" + movies[i].year + ")</b></div> <div class='row'>" + createRating(movies[i].imdb, movies[i].tomatoes, movies[i].metacritic) + "<div class='col-sm-6' id='releaseDate'>" + movies[i].runtime + "&nbsp;|&nbsp;&nbsp;" + movies[i].release_date + "</div></div><div class='row summary'>&nbsp;&nbsp;" + movies[i].summary + "</div><div class='row addInfo'> Genre: " + movies[i].genre + "<br> Physical Release: " + movies[i].dvd_release + "</div>" +  getButtons() + "</div>" + trailer(movies[i].id) + "</div>";
+                            document.getElementById(movies[i].id).innerHTML += "<div class='col-sm-3 poster'><span><img src='https://m.media-amazon.com/images" + movies[i].poster + "' align='right'></span> </div><div class='col-sm-4 info'><div class='row' id='title'><b>" + movies[i].title + " (" + movies[i].year + ")</b></div> <div class='row'>" + createRating(movies[i].imdb, movies[i].tomatoes, movies[i].metacritic) + "<div class='col-sm-6' id='releaseDate'>" + movies[i].runtime + "&nbsp;|&nbsp;&nbsp;" + movies[i].release_date + "</div></div><div class='row summary'>&nbsp;&nbsp;" + movies[i].summary + "</div><div class='row addInfo'> Genre: " + movies[i].genre + "<br> Physical Release: " + movies[i].dvd_release + "</div>" +  getButtons(movies[i].id) + "</div>" + trailer(movies[i].id) + "</div>";
+
                         }
+
                     }
 
                     if(tag === "search") {
@@ -259,7 +252,7 @@ function addMovie(title, yea){
 
         $.ajax({
             type: "POST",
-            data: {"servername":servername,"username":username, "password":password, "database":database, "function":"lastUpcomingCheck"},
+            data: {"function":"lastUpcomingCheck"},
             url: "sql.php",
             success: function(lastDate) {
 
@@ -292,7 +285,7 @@ function addMovie(title, yea){
 
         $.ajax({
             type: "POST",
-            data: {"servername":servername,"username":username, "password":password, "database":database, "function":"updateUpcomingCheck", "date":date},
+            data: {"function":"updateUpcomingCheck", "date":date},
             url: "sql.php",
             success: function(data) {
 
@@ -307,7 +300,7 @@ function addMovie(title, yea){
 
         $.ajax({
             type: "POST",
-            data: {"servername":servername,"username":username, "password":password, "database":database, "function":"getUpcoming"},
+            data: {"function":"getUpcoming"},
             url: "sql.php",
             success: function(moviesRAW) {
 
@@ -321,7 +314,7 @@ function addMovie(title, yea){
 
                             $.ajax({
                                 type: "POST",
-                                data: {"servername":servername,"username":username, "password":password, "database":database, "function":"removeUpcomingTag", "id":movies[i].id},
+                                data: {"function":"removeUpcomingTag", "id":movies[i].id},
                                 url: "sql.php",
                                 success: function(success) {
                                 }
@@ -367,7 +360,7 @@ function updateMissing(){
 
     $.ajax({
         type: "POST",
-        data: {"servername":servername,"username":username, "password":password, "database":database, "function":"getMissingIMDB"},
+        data: {"function":"getMissingIMDB"},
         url: "sql.php",
         success: function (data) {
 
@@ -409,6 +402,9 @@ function updateMissing(){
                             var poster = "";
                             if (movie.Poster !== null) {
                                 poster = movie.Poster.slice(33);
+                                if(!poster.startsWith('/')){
+                                    poster = "/" + poster;
+                                }
                             }
                             var summary = movie.Plot;
 
@@ -424,10 +420,6 @@ function updateMissing(){
                             $.ajax({
                                 type: "POST",
                                 data: {
-                                    "servername": servername,
-                                    "username": username,
-                                    "password": password,
-                                    "database": database,
                                     "function": "updateMovie",
                                     "id": id,
                                     "release_date": release_date,
@@ -462,10 +454,13 @@ function updateMissing(){
     });
 }
 
-function getButtons(){
+function getButtons(id){
     var buttons = "<div class='row buttons'><button class='btn btn-primary'>Watch Trailer</button>";
         buttons += "<button class='btn btn-primary disabled'>Buy Tickets</button>";
-        buttons += "</div>";
+   // buttons += "<form method='post'><button type='submit' name='addToWatchlist' class='btn btn-primary' value=" + id + ">+ Watchlist</button></form>";
+        buttons += "<button name='addToWatchlist' class='btn btn-primary' value='" + id + "' id='watchlist" + id + "'>+ Watchlist</button>";
+
+    buttons += "</div>";
         return buttons;
 }
 
@@ -485,8 +480,8 @@ function trailer(id){
         if (title !== "" && year !== "") {
             loadMovies("search", title, year);
         } else if (title !== "") {
-            loadMovies("search", title, "");
-            loadMovies("search", title, "");
+            loadMovies("search", title);
+            loadMovies("search", title);
         }
 
     }
@@ -514,6 +509,33 @@ function trailer(id){
         window.location.replace("index.html?t=" + title + y);
     }
 
+
+
+    $("#latest").on('click', 'button', function(e){
+        e.preventDefault();
+
+        let tag = $(this).attr("name");
+        var data = {};
+        data[tag] = $(this).attr("value");
+
+        $.ajax({
+            type: 'POST',
+            url: 'userData.php',
+            data: data ,
+            success: function (success) {
+                if(success.includes("removed")){
+                    let buttonID = "#" + success.slice(7);
+                    $(buttonID).fadeOut();
+                }else if(success.includes("added")){
+                    let buttonID = "#watchlist" + success.slice(5);
+                    $(buttonID).text("Added!");
+                    $(buttonID).addClass("disabled");
+                }
+            }
+        });
+
+    });
+
     // Listener for search function, redirects page with search info
     document.getElementById('search').addEventListener('submit',function(e) {
         e.preventDefault();
@@ -537,6 +559,9 @@ function trailer(id){
             document.getElementById("search2").value = "";
         }
     });
+
+
+
 
     function printTime(name){
         let date = new Date();

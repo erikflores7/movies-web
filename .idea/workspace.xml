@@ -2,8 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a447b5d-79e2-4562-8c6a-05accd5efd58" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/latest.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/login.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/signout.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userData.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/userData.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/watchlist.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/fe3e4398-e03d-4f81-abfb-394b59ffea4c.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/fe3e4398-e03d-4f81-abfb-394b59ffea4c.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/genre.html" beforeDir="false" afterPath="$PROJECT_DIR$/genre.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/latest.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql.js" beforeDir="false" afterPath="$PROJECT_DIR$/sql.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql.php" beforeDir="false" afterPath="$PROJECT_DIR$/sql.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/upcoming.html" beforeDir="false" afterPath="$PROJECT_DIR$/upcoming.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -48,6 +62,20 @@
         <item name="moovies: schema" type="c314c289:MysqlImplModel$Schema" />
         <item name="movies: table" type="98d5ac3d:MysqlImplModel$Table" />
       </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="moovies: schema" type="c314c289:MysqlImplModel$Schema" />
+        <item name="user: table" type="98d5ac3d:MysqlImplModel$Table" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="moovies: schema" type="c314c289:MysqlImplModel$Schema" />
+        <item name="watchlist: table" type="98d5ac3d:MysqlImplModel$Table" />
+      </path>
     </expand>
     <select />
   </component>
@@ -55,15 +83,16 @@
     <session id="-1550100971">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="24" />
+          <entry key="project.closed" value="30" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.1" value="3" />
           <entry key="project.open.time.11" value="3" />
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.13" value="2" />
-          <entry key="project.open.time.14" value="2" />
-          <entry key="project.open.time.15" value="2" />
+          <entry key="project.open.time.14" value="6" />
+          <entry key="project.open.time.15" value="3" />
           <entry key="project.open.time.16" value="2" />
+          <entry key="project.open.time.17" value="1" />
           <entry key="project.open.time.19" value="1" />
           <entry key="project.open.time.20" value="1" />
           <entry key="project.open.time.3" value="1" />
@@ -71,65 +100,67 @@
           <entry key="project.open.time.6" value="1" />
           <entry key="project.open.time.8" value="1" />
           <entry key="project.open.time.9" value="2" />
-          <entry key="project.opened" value="24" />
+          <entry key="project.opened" value="30" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="config" value="2" />
+          <entry key="config" value="3" />
           <entry key="css" value="5" />
-          <entry key="gitignore" value="2" />
-          <entry key="html" value="15" />
+          <entry key="gitignore" value="3" />
+          <entry key="html" value="23" />
           <entry key="ini" value="1" />
-          <entry key="js" value="6" />
-          <entry key="json" value="1" />
-          <entry key="md" value="3" />
-          <entry key="movies" value="9" />
-          <entry key="php" value="16" />
+          <entry key="js" value="10" />
+          <entry key="json" value="2" />
+          <entry key="md" value="4" />
+          <entry key="movies" value="10" />
+          <entry key="php" value="33" />
           <entry key="sql" value="3" />
           <entry key="upcoming" value="4" />
+          <entry key="user" value="1" />
+          <entry key="watchlist" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CSS" value="5" />
-          <entry key="Database Element" value="13" />
-          <entry key="HTML" value="15" />
+          <entry key="Database Element" value="16" />
+          <entry key="HTML" value="23" />
           <entry key="Ini" value="1" />
-          <entry key="JSON" value="1" />
-          <entry key="JavaScript" value="6" />
-          <entry key="Markdown" value="3" />
-          <entry key="PHP" value="16" />
-          <entry key="PLAIN_TEXT" value="4" />
+          <entry key="JSON" value="2" />
+          <entry key="JavaScript" value="10" />
+          <entry key="Markdown" value="4" />
+          <entry key="PHP" value="33" />
+          <entry key="PLAIN_TEXT" value="6" />
           <entry key="Scratch" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="cell" value="103" />
+          <entry key="cell" value="137" />
           <entry key="config" value="140" />
           <entry key="css" value="2537" />
-          <entry key="gitignore" value="31" />
-          <entry key="html" value="15504" />
-          <entry key="js" value="7153" />
+          <entry key="gitignore" value="42" />
+          <entry key="html" value="15658" />
+          <entry key="js" value="9371" />
           <entry key="json" value="24" />
-          <entry key="md" value="1217" />
-          <entry key="php" value="4888" />
-          <entry key="sql" value="237" />
-          <entry key="txt" value="911" />
+          <entry key="md" value="1246" />
+          <entry key="php" value="10925" />
+          <entry key="sql" value="448" />
+          <entry key="txt" value="951" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CSS" value="2537" />
-          <entry key="HTML" value="15506" />
+          <entry key="HTML" value="15676" />
           <entry key="JSON" value="24" />
-          <entry key="JavaScript" value="7151" />
-          <entry key="Markdown" value="1217" />
-          <entry key="PHP" value="4875" />
-          <entry key="PLAIN_TEXT" value="1082" />
-          <entry key="SQL" value="248" />
-          <entry key="Scratch" value="105" />
+          <entry key="JavaScript" value="9366" />
+          <entry key="Markdown" value="1246" />
+          <entry key="PHP" value="10899" />
+          <entry key="PLAIN_TEXT" value="1133" />
+          <entry key="SQL" value="459" />
+          <entry key="Scratch" value="139" />
         </counts>
       </usages-collector>
     </session>
@@ -137,19 +168,19 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="das://fe3e4398-e03d-4f81-abfb-394b59ffea4c/schema/moovies/table/movies">
-          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-            <state>
-              <filtering enabled="true" />
+        <entry file="file://$PROJECT_DIR$/userData.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="354">
+              <caret line="29" selection-start-line="29" selection-end-line="29" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sql.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-998">
-              <caret line="191" column="54" selection-start-line="191" selection-start-column="54" selection-end-line="191" selection-end-column="54" />
+            <state relative-caret-position="339">
+              <caret line="568" column="5" lean-forward="true" selection-start-line="568" selection-start-column="5" selection-end-line="568" selection-end-column="5" />
               <folding>
                 <element signature="n#style#0;n#img#0;n#li#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#img#0;n#li#0;n#!!top" expanded="true" />
@@ -164,40 +195,46 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="das://fe3e4398-e03d-4f81-abfb-394b59ffea4c/schema/moovies/table/watchlist">
+          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+            <state>
+              <filtering enabled="true" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/latest.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="525">
+              <caret line="35" column="43" selection-start-line="35" selection-start-column="43" selection-end-line="35" selection-end-column="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/upcoming.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="585">
+              <caret line="39" column="68" lean-forward="true" selection-start-line="39" selection-start-column="68" selection-end-line="39" selection-end-column="68" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="65" column="79" selection-start-line="65" selection-start-column="79" selection-end-line="65" selection-end-column="79" />
+            <state relative-caret-position="450">
+              <caret line="30" column="39" selection-start-line="30" selection-start-column="39" selection-end-line="30" selection-end-column="39" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/genre.html">
+        <entry file="file://$PROJECT_DIR$/login.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="359">
-              <caret line="41" column="84" selection-start-line="41" selection-start-column="84" selection-end-line="41" selection-end-column="84" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="165">
-                <caret line="11" column="18" lean-forward="true" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/latest.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-48">
-              <caret line="39" column="84" selection-start-line="39" selection-start-column="84" selection-end-line="39" selection-end-column="84" />
+            <state relative-caret-position="975">
+              <caret line="70" column="20" selection-start-line="70" selection-start-column="20" selection-end-line="70" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -205,11 +242,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sql.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-4908">
-              <caret line="31" selection-start-line="31" selection-end-line="31" />
-              <folding>
-                <element signature="e#6#91#0#PHP" expanded="true" />
-              </folding>
+            <state relative-caret-position="143">
+              <caret line="37" selection-start-line="37" selection-end-line="37" />
             </state>
           </provider>
         </entry>
@@ -232,8 +266,6 @@
       <find>exists</find>
       <find>upcoming</find>
       <find>purgeUpcoming</find>
-      <find>loadMovies</find>
-      <find>search</find>
       <find>loadmo</find>
       <find>test</find>
       <find>exis</find>
@@ -248,6 +280,10 @@
       <find>document.</find>
       <find>not found</find>
       <find>loadMo</find>
+      <find>search</find>
+      <find>loadMovies</find>
+      <find>trailer</find>
+      <find>return false</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -269,18 +305,25 @@
         <option value="$PROJECT_DIR$/update-upcoming.php" />
         <option value="$PROJECT_DIR$/exists-upcoming.php" />
         <option value="$PROJECT_DIR$/passwords.config" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/passwords.json" />
         <option value="$PROJECT_DIR$/get-upcoming.php" />
         <option value="$PROJECT_DIR$/comedy.html" />
         <option value="$PROJECT_DIR$/main.css" />
-        <option value="$PROJECT_DIR$/genre.html" />
-        <option value="$PROJECT_DIR$/upcoming.html" />
-        <option value="$PROJECT_DIR$/latest.html" />
-        <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/sql.php" />
-        <option value="$PROJECT_DIR$/sql.js" />
+        <option value="$PROJECT_DIR$/config.php" />
+        <option value="$PROJECT_DIR$/signout.php" />
+        <option value="$PROJECT_DIR$/userData.js" />
+        <option value="$PROJECT_DIR$/watchlist.php" />
+        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/genre.html" />
+        <option value="$PROJECT_DIR$/latest.php" />
+        <option value="$PROJECT_DIR$/latest.html" />
+        <option value="$PROJECT_DIR$/upcoming.html" />
+        <option value="$PROJECT_DIR$/login.php" />
+        <option value="$PROJECT_DIR$/sql.php" />
+        <option value="$PROJECT_DIR$/userData.php" />
+        <option value="$PROJECT_DIR$/sql.js" />
       </list>
     </option>
   </component>
@@ -294,7 +337,7 @@
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
     <option name="width" value="1440" />
-    <option name="height" value="807" />
+    <option name="height" value="805" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -390,7 +433,13 @@
       <workItem from="1534540689910" duration="6962000" />
       <workItem from="1534624024501" duration="686000" />
       <workItem from="1534629170487" duration="4744000" />
-      <workItem from="1534658226282" duration="5525000" />
+      <workItem from="1534658226282" duration="5591000" />
+      <workItem from="1534798598912" duration="3981000" />
+      <workItem from="1535157417974" duration="17637000" />
+      <workItem from="1535244917994" duration="14514000" />
+      <workItem from="1535308057899" duration="7137000" />
+      <workItem from="1535346117816" duration="3414000" />
+      <workItem from="1535409168077" duration="849000" />
     </task>
     <task id="LOCAL-00001" summary="Testing .gitignore">
       <created>1534183399375</created>
@@ -427,11 +476,18 @@
       <option name="project" value="LOCAL" />
       <updated>1534664488335</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Added homepage with search bar, and search by Year, Optimized loading of movies a bit (Before would try to add every movie searched, now only tries to add if nothing is returned from search), added check to add to movies to check if movie already exists, added Genre Tab">
+      <created>1534664564826</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1534664564826</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="172492000" />
+    <option name="totallyTimeSpent" value="220090000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -443,26 +499,26 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="807" extended-state="0" />
+    <frame x="0" y="23" width="1440" height="805" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.069384836" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.07367668" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4985694" weight="0.32867134" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49785408" weight="0.15988779" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4983678" weight="0.13714285" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49928468" weight="0.32867134" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49570817" weight="0.3272727" />
+      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49213162" weight="0.14305751" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49713877" weight="0.32867134" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.51216024" side_tool="true" visible="true" weight="0.33006993" />
-      <window_info anchor="bottom" id="Database Changes" order="11" sideWeight="0.49642345" weight="0.13426574" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5171674" side_tool="true" visible="true" weight="0.33239833" />
+      <window_info anchor="bottom" id="Database Changes" order="11" sideWeight="0.49570817" weight="0.13323984" />
       <window_info anchor="bottom" id="Database Console" order="12" sideWeight="0.49570817" weight="0.15524475" />
-      <window_info active="true" anchor="bottom" id="PHP-CGI Server" order="13" sideWeight="0.48783976" visible="true" weight="0.33006993" />
+      <window_info anchor="bottom" id="PHP-CGI Server" order="13" sideWeight="0.4828326" visible="true" weight="0.33239833" />
       <window_info active="true" anchor="bottom" id="Messages" order="14" sideWeight="0.49928468" visible="true" weight="0.3286908" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -502,20 +558,26 @@
     <entry file="file://$PROJECT_DIR$/data.php" />
     <entry file="file://$PROJECT_DIR$/Main.js" />
     <entry file="file://$PROJECT_DIR$/latest.js" />
-    <entry file="file://$PROJECT_DIR$/passwords.config">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="17" lean-forward="true" selection-end-line="13" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/exists-upcoming.php" />
     <entry file="file://$PROJECT_DIR$/get-upcoming.php" />
     <entry file="file://$PROJECT_DIR$/update-upcoming.php" />
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/comedy.html" />
+    <entry file="file://$PROJECT_DIR$/main.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="14" selection-start-line="1" selection-start-column="14" selection-end-line="1" selection-end-column="14" />
+        <state relative-caret-position="402">
+          <caret line="74" column="24" selection-start-line="74" selection-start-column="24" selection-end-line="74" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://fe3e4398-e03d-4f81-abfb-394b59ffea4c/schema/moovies/table/user">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+          <column-attributes>
+            <column name="rated" languageId="JSON" />
+            <column name="recommended" languageId="JSON" />
+            <column name="watchList" languageId="JSON" />
+          </column-attributes>
         </state>
       </provider>
     </entry>
@@ -526,58 +588,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/comedy.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="73">
-          <caret line="51" column="30" lean-forward="true" selection-start-line="51" selection-start-column="30" selection-end-line="51" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/upcoming.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="39" column="84" selection-start-line="39" selection-start-column="84" selection-end-line="39" selection-end-column="84" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/genre.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="41" column="84" selection-start-line="41" selection-start-column="84" selection-end-line="41" selection-end-column="84" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="402">
-          <caret line="74" column="24" selection-start-line="74" selection-start-column="24" selection-end-line="74" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/latest.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-48">
-          <caret line="39" column="84" selection-start-line="39" selection-start-column="84" selection-end-line="39" selection-end-column="84" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="65" column="79" selection-start-line="65" selection-start-column="79" selection-end-line="65" selection-end-column="79" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sql.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4908">
-          <caret line="31" selection-start-line="31" selection-end-line="31" />
-          <folding>
-            <element signature="e#6#91#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="das://fe3e4398-e03d-4f81-abfb-394b59ffea4c/schema/moovies/table/movies">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
@@ -585,10 +595,119 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/passwords.config">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="17" lean-forward="true" selection-end-line="13" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/signout.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/watchlist.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1026">
+          <caret line="41" column="39" selection-start-line="41" selection-start-column="39" selection-end-line="41" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="135">
+            <caret line="9" column="17" lean-forward="true" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/userData.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1050">
+          <caret line="70" column="132" selection-start-line="70" selection-start-column="132" selection-end-line="70" selection-end-column="132" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="10" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/genre.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="35" column="37" lean-forward="true" selection-start-line="35" selection-start-column="37" selection-end-line="35" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/latest.html" />
+    <entry file="das://fe3e4398-e03d-4f81-abfb-394b59ffea4c/schema/moovies/table/watchlist">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/latest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="35" column="43" selection-start-line="35" selection-start-column="43" selection-end-line="35" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/upcoming.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret line="39" column="68" lean-forward="true" selection-start-line="39" selection-start-column="68" selection-end-line="39" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="30" column="39" selection-start-line="30" selection-start-column="39" selection-end-line="30" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/login.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="975">
+          <caret line="70" column="20" selection-start-line="70" selection-start-column="20" selection-end-line="70" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/userData.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="354">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sql.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="37" selection-start-line="37" selection-end-line="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="12" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/sql.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-998">
-          <caret line="191" column="54" selection-start-line="191" selection-start-column="54" selection-end-line="191" selection-end-column="54" />
+        <state relative-caret-position="339">
+          <caret line="568" column="5" lean-forward="true" selection-start-line="568" selection-start-column="5" selection-end-line="568" selection-end-column="5" />
           <folding>
             <element signature="n#style#0;n#img#0;n#li#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#img#0;n#li#0;n#!!top" expanded="true" />
@@ -598,16 +717,6 @@
             <element signature="e#292#298#0" expanded="true" />
             <element signature="e#298#304#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="165">
-            <caret line="11" column="18" lean-forward="true" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
-          </first_editor>
-          <second_editor />
         </state>
       </provider>
     </entry>
