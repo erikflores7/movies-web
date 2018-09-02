@@ -6,8 +6,6 @@
  * Time: 9:52 PM
  */
 
-$function = $_POST['function'];
-
 $id = "";
 $title = "";
 $year = "";
@@ -40,73 +38,74 @@ $upcoming = 0;
         return $conn;
     }
 
+if(isset($_POST['function'])) {
+    switch ($_POST['function']) {
 
-switch ($function){
+        case "getUpcoming":
+            getUpcomingList();
+            break;
+        case "shouldAddUpcoming":
+            shouldAddUpcoming($_POST['title']);
+            break;
+        case "lastUpcomingCheck":
+            getLastUpcomingUpdate();
+            break;
+        case "updateUpcomingCheck":
+            updateUpcomingCheck($_POST['date']);
+            break;
+        case "addMovie":
+            $id = $_POST['id'];
+            $title = $_POST['title'];
+            $year = $_POST['year'];
+            $release_date = $_POST['release_date'];
+            $genre = $_POST['genre'];
+            $imdb = $_POST['imdb'];
+            $tomatoes = $_POST['tomatoes'];
+            $metacritic = $_POST['metacritic'];
+            $dvd_release = $_POST['dvd_release'];
+            $runtime = $_POST['runtime'];
+            $poster = $_POST['poster'];
+            $summary = $_POST['summary'];
+            $upcoming = $_POST['upcoming'];
+            $latest = $_POST['latest'];
+            addMovie();
+            break;
+        case "updateMovie":
+            $id = $_POST['id'];
+            $year = $_POST['year'];
+            $release_date = $_POST['release_date'];
+            $genre = $_POST['genre'];
+            $imdb = $_POST['imdb'];
+            $tomatoes = $_POST['tomatoes'];
+            $metacritic = $_POST['metacritic'];
+            $dvd_release = $_POST['dvd_release'];
+            $runtime = $_POST['runtime'];
+            $poster = $_POST['poster'];
+            $summary = $_POST['summary'];
+            $upcoming = $_POST['upcoming'];
+            $latest = $_POST['latest'];
+            updateMovie();
+            break;
+        case "removeUpcomingTag":
+            removeUpcomingTag($_POST['id']);
+            break;
+        case "removeLatestTag":
+            removeLatestTag($_POST['id']);
+            break;
+        case "getLatest":
+            getLatestList();
+            break;
+        case "getByGenre":
+            getByGenre($_POST['search']);
+            break;
+        case "getMissingIMDB":
+            getMissingIMDB();
+            break;
+        case "search":
+            search($_POST['search']);
+            break;
 
-    case "getUpcoming":
-        getUpcomingList();
-        break;
-    case "shouldAddUpcoming":
-        shouldAddUpcoming($_POST['title']);
-        break;
-    case "lastUpcomingCheck":
-        getLastUpcomingUpdate();
-        break;
-    case "updateUpcomingCheck":
-        updateUpcomingCheck($_POST['date']);
-        break;
-    case "addMovie":
-        $id = $_POST['id'];
-        $title = $_POST['title'];
-        $year = $_POST['year'];
-        $release_date = $_POST['release_date'];
-        $genre = $_POST['genre'];
-        $imdb = $_POST['imdb'];
-        $tomatoes = $_POST['tomatoes'];
-        $metacritic = $_POST['metacritic'];
-        $dvd_release = $_POST['dvd_release'];
-        $runtime = $_POST['runtime'];
-        $poster = $_POST['poster'];
-        $summary = $_POST['summary'];
-        $upcoming = $_POST['upcoming'];
-        $latest = $_POST['latest'];
-        addMovie();
-        break;
-    case "updateMovie":
-        $id = $_POST['id'];
-        $year = $_POST['year'];
-        $release_date = $_POST['release_date'];
-        $genre = $_POST['genre'];
-        $imdb = $_POST['imdb'];
-        $tomatoes = $_POST['tomatoes'];
-        $metacritic = $_POST['metacritic'];
-        $dvd_release = $_POST['dvd_release'];
-        $runtime = $_POST['runtime'];
-        $poster = $_POST['poster'];
-        $summary = $_POST['summary'];
-        $upcoming = $_POST['upcoming'];
-        $latest = $_POST['latest'];
-        updateMovie();
-        break;
-    case "removeUpcomingTag":
-        removeUpcomingTag($_POST['id']);
-        break;
-    case "removeLatestTag":
-        removeLatestTag($_POST['id']);
-        break;
-    case "getLatest":
-        getLatestList();
-        break;
-    case "getByGenre":
-        getByGenre($_POST['search']);
-        break;
-    case "getMissingIMDB":
-        getMissingIMDB();
-        break;
-    case "search":
-        search($_POST['search']);
-        break;
-
+    }
 }
 
     function getUpcomingList(){

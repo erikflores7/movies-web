@@ -9,7 +9,7 @@
             url: "userData.php",
             success: function(moviesRAW) {
 
-                if (moviesRAW !== null && moviesRAW !== "[]") {
+                if (moviesRAW !== null && moviesRAW !== "[]" && moviesRAW !== "DNE") {
 
                     var movies = JSON.parse(moviesRAW);
 
@@ -29,7 +29,7 @@
                     }
 
                 }else{
-                        document.getElementById("latest").innerHTML = "<h1> No Movies found in <b>Watchlist</b>!</h1>";
+                        document.getElementById("latest").innerHTML = "<h3> You have no movies on your <b>Watchlist</b>!</h3>";
                 }
             }
         });

@@ -438,7 +438,7 @@ function updateMissing(){
                                 url: "sql.php",
                                 success: function (data) {
 
-                                    document.getElementById("latest").innerText += data;
+                                    //document.getElementById("latest").innerText += data;
 
                                 }
                             });
@@ -457,7 +457,6 @@ function updateMissing(){
 function getButtons(id){
     var buttons = "<div class='row buttons'><button class='btn btn-primary'>Watch Trailer</button>";
         buttons += "<button class='btn btn-primary disabled'>Buy Tickets</button>";
-   // buttons += "<form method='post'><button type='submit' name='addToWatchlist' class='btn btn-primary' value=" + id + ">+ Watchlist</button></form>";
         buttons += "<button name='addToWatchlist' class='btn btn-primary' value='" + id + "' id='watchlist" + id + "'>+ Watchlist</button>";
 
     buttons += "</div>";
@@ -471,12 +470,9 @@ function trailer(id){
 }
 
     // addMovie will search if movie exists in database, if not it will look up keyword and add it
-    // Changed addMovie to load movies once again after adding new, reset old loaded movies
-    // Might need to redirect to home page/movie page instead of staying on Latest/Upcoming
     function search(title, year) {
         document.getElementById("latest").innerHTML = "";
         printTime("Second");
-        //addMovie(search, false);
         if (title !== "" && year !== "") {
             loadMovies("search", title, year);
         } else if (title !== "") {
@@ -490,6 +486,7 @@ function trailer(id){
     function extractSearch(url){
 
         let params = new URL(url).searchParams;
+
         if(params.has("t") && params.has("y")){
             initiate("search", params.get("t"), params.get("y"));
         }else if(params.get("t")){
@@ -506,7 +503,7 @@ function trailer(id){
         if(year !== ""){
              y = "&y=" + year;
         }
-        window.location.replace("index.html?t=" + title + y);
+        window.location.replace("index.php?t=" + title + y);
     }
 
 
@@ -541,26 +538,19 @@ function trailer(id){
         e.preventDefault();
 
         let title = document.getElementById('search2').value;
-        let year = document.getElementById('search3').value;
+
         if(title != null && title !== ""){
-            redirect(title, year);
-            document.getElementById("search2").value = "";
-            document.getElementById("search3").value = "";
+
+            if(document.getElementById('search3') != null){
+                let year = document.getElementById('search3').value;
+                redirect(title, year);
+                document.getElementById("search3").value = "";
+            }else{
+                redirect(title, "");
+                document.getElementById("search2").value = "";
+            }
         }
     });
-
-    // Listener for smaller search bar, redirects page
-    document.getElementById('search').addEventListener('submit',function(e) {
-        e.preventDefault();
-
-        let title = document.getElementById('search2').value;
-        if(title != null && title !== ""){
-            redirect(title, "");
-            document.getElementById("search2").value = "";
-        }
-    });
-
-
 
 
     function printTime(name){

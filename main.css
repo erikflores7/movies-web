@@ -86,3 +86,7 @@
         max-height: 23em;
         background-color: whitesmoke;
     }
+
+    .errorMessage{
+        color: red;
+    }

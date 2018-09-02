@@ -26,26 +26,27 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Moovies </a>
+                <a class="navbar-brand" href="index.php">Moovies </a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="upcoming.html">Upcoming <span class="sr-only">(current)</span></a></li>
-                    <li><a href="latest.php">Latest</a></li>
+                    <li><a href="upcoming.php">Upcoming <span class="sr-only">(current)</span></a></li>
+                    <li class="active"><a href="latest.php">Latest</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Movies <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="#">Top Rated</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="genre.html?genre=Horror">Horror </a></li>
-                            <li><a href="genre.html?genre=Comedy">Comedy </a></li>
-                            <li><a href="genre.html?genre=Action">Action </a></li>
-                            <li><a href="genre.html?genre=Animation">Animation </a></li>
+                            <li><a href="genre.php?genre=Horror">Horror </a></li>
+                            <li><a href="genre.php?genre=Comedy">Comedy </a></li>
+                            <li><a href="genre.php?genre=Action">Action </a></li>
+                            <li><a href="genre.php?genre=Animation">Animation </a></li>
                         </ul>
                     </li>
                 </ul>
+
                 <ul class="nav navbar-nav navbar-right">
                     <li>
 
@@ -72,7 +73,6 @@
                         echo "<li><a href='login.php'>Log In</a></li>";
                     }
                     ?>
-
                 </ul>
 
             </div><!-- /.navbar-collapse -->

@@ -39,22 +39,65 @@
         $conn = getConnection();
         if(isset($username) && isset($password)) {
             try {
-                $result = $conn->prepare("SELECT 1 FROM user WHERE userName = :userName AND password = :password");
+                $result = $conn->prepare("SELECT password FROM user WHERE userName = :userName");
                 $result->bindParam(':userName', $username);
-                $result->bindParam(':password', $password);
 
                 $result->execute();
                 $return = $result->fetchAll();
 
-                if(!empty($return)){
+                if(!empty($return) && password_verify($password, $return[0]['password'])){
                     $_SESSION['userName'] = $username;
+                    unset($_SESSION['registerError']);
+                    unset($_SESSION['loginError']);
                     header("location: watchlist.php");
-                    echo 1;
+                    return 1;
                 }else{
-                    echo "Does not exist!";
+                    return 0;
                 }
 
-                return;
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+            }
+        }
+    }
+
+    function register($username, $email, $password){
+        $conn = getConnection();
+        if(isset($username) && isset($password)) {
+            try {
+                $result = $conn->prepare("SELECT * FROM user WHERE userName = :userName OR email = :email");
+                $result->bindParam(':userName', $username);
+                $result->bindParam(':email', $email);
+
+                $result->execute();
+                $return = $result->fetchAll();
+
+                if(empty($return)){
+                    addUser($username, $email, password_hash($password, PASSWORD_DEFAULT));
+                }else{
+                    return 0;
+                }
+
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+            }
+        }
+    }
+
+    function addUser($username, $email, $password){
+        $conn = getConnection();
+        if(isset($username) && isset($password)) {
+            try {
+                $result = $conn->prepare("INSERT INTO user (userName, email, password) VALUES (:userName, :email, :password)");
+                $result->bindParam(':userName', $username);
+                $result->bindParam(':email', $email);
+                $result->bindParam(':password', $password);
+
+                $result->execute();
+
+                $_SESSION['userName'] = $username;
+                header("location: watchlist.php");
+                return 1;
 
             } catch (PDOException $e) {
                 echo $e->getMessage();
@@ -119,7 +162,7 @@ function removeFromWatchlist($username, $id){
 
         $conn = getConnection();
         try {
-            $result = $conn->prepare("SELECT * FROM watchlist w INNER JOIN movies m ON w.movieID = m.id");
+            $result = $conn->prepare("SELECT * FROM watchlist w INNER JOIN movies m ON w.movieID = m.id WHERE w.userName = :userName");
             $result->bindParam(':userName', $_POST['userName']);
 
             $result->execute();
@@ -128,10 +171,8 @@ function removeFromWatchlist($username, $id){
             if(!empty($return)){
                 echo json_encode($return);
             }else{
-                echo "Does not exist!";
+                echo "DNE";
             }
-            return;
-
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
