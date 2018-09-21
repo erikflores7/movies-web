@@ -24,7 +24,7 @@
 
                             document.getElementById("latest").innerHTML += "<div class='row row-equal-height movie' id='" + movies[i].id + "'" + style + "></div>";
 
-                            document.getElementById(movies[i].id).innerHTML += "<div class='col-sm-3 poster'><span><img src='https://m.media-amazon.com/images" + movies[i].poster + "' align='right'></span> </div><div class='col-sm-4 info'><div class='row' id='title'><b>" + movies[i].title + " (" + movies[i].year + ")</b></div> <div class='row'>" + createRating(movies[i].imdb, movies[i].tomatoes, movies[i].metacritic) + "<div class='col-sm-6' id='releaseDate'>" + movies[i].runtime + "&nbsp;|&nbsp;&nbsp;" + movies[i].release_date + "</div></div><div class='row summary'>&nbsp;&nbsp;" + movies[i].summary + "</div><div class='row addInfo'> Genre: " + movies[i].genre + "<br> Physical Release: " + movies[i].dvd_release + "</div>" +  getButtons(movies[i].id) + "</div>" + trailer(movies[i].id) + "</div>";
+                            document.getElementById(movies[i].id).innerHTML += "<div class='col-sm-3 poster'><span><img src='https://m.media-amazon.com/images" + movies[i].poster + "' align='right'></span> </div><div class='col-sm-4 info'><div class='row' id='title'><b>" + movies[i].title + " (" + movies[i].year + ")</b></div> <div class='row'>" + createRating(movies[i].imdb, movies[i].tomatoes, movies[i].metacritic) + "<div class='col-sm-6' id='releaseDate'>" + movies[i].runtime + "&nbsp;|&nbsp;&nbsp;" + movies[i].release_date + "</div></div><div class='row summary'>&nbsp;&nbsp;" + movies[i].summary + "</div><div class='row addInfo'> Genre: " + movies[i].genre + "<br> Physical Release: " + movies[i].dvd_release + "</div>" +  /*loadStars(movies[i].id) +*/ getButtons(movies[i].id) + "</div>" + trailer(movies[i].id) + "</div>";
                         }
                     }
 
@@ -75,13 +75,10 @@
     }
 
     function trailer(id){
-
         var video = "<video width='320' height='240' controls> <source src='' type='video/mp4'> Your browser does not support this video. </video>";
         return "";
     }
 
     function notSignedIn(){
-
         document.getElementById("latest").innerHTML = "<h1>You must be signed in to view your Watchlist!</h1><h2> <a href='login.php'>Sign in</a></h2>";
-
     }

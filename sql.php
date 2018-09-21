@@ -31,7 +31,7 @@ $upcoming = 0;
             return $conn;
         }
 
-        include 'config.php';
+        include_once('../config.php');
 
         $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -104,6 +104,8 @@ if(isset($_POST['function'])) {
         case "search":
             search($_POST['search']);
             break;
+        case "getKeys":
+            getKeys();
 
     }
 }
@@ -145,14 +147,23 @@ if(isset($_POST['function'])) {
 
     function getByGenre($genre){
 
+        if(isset($_POST['page'])){
+            $lowerLimit = ($_POST['page'] - 1) * 5;
+        }else{
+            $lowerLimit = 0;
+        }
+        settype($lowerLimit, "integer");
+        $genre = '%' . $genre . '%';
+
         try {
             $conn = getConnection();
-            $result = $conn->prepare("SELECT * FROM movies WHERE lower(genre) LIKE lower('%$genre%');");
+            $sql = $conn->prepare("SELECT * FROM movies WHERE lower(genre) LIKE lower( :genre ) ORDER BY year DESC LIMIT 5 OFFSET :lowerLimit ;");
+            $sql->bindParam(':genre', $genre);
+            $sql->bindParam(':lowerLimit', $lowerLimit, PDO::PARAM_INT);
 
-            $result->execute();
-            $return = $result->fetchAll();
-
-            echo json_encode($return);
+            $sql->execute();
+            $result = $sql->fetchAll();
+            echo json_encode($result);
             return;
         }
         catch(PDOException $e)
@@ -196,19 +207,18 @@ if(isset($_POST['function'])) {
             $return = $result->fetchAll();
 
             if(empty($return)){
-                echo false;
-                return;
+                return false;
             }else{
-                echo true;
-                return;
+                return true;
             }
             //echo "Movie '".$title."' already exists!";
         }catch(PDOException $e) {
             echo $e->getMessage();
-            return;
+            return true;
         }
     }
 
+    // Last time movies were updated through daily update
     function getLastUpcomingUpdate(){
 
         try{
@@ -365,19 +375,27 @@ if(isset($_POST['function'])) {
     function search($search){
 
         $year = "";
-        if(isset($_POST['year'])) {
-            $y = $_POST['year'];
-            if ($y !== "") {
-            $year = "AND year='$y'";
-            }
+        if(isset($_POST['year']) && $_POST['year'] != "") {
+            $year = $_POST['year'];
         }
+
+        // Allows searching 'Spider Man' to show results for 'Spider-Man' as well
+        $search = str_replace(' ', '%', $search);
+        $search = '%' . $search . '%';
 
         try {
             $conn = getConnection();
-            $result = $conn->prepare("SELECT * FROM movies WHERE lower(title) LIKE lower('%$search%') $year;");
+            if($year == ""){
+                $sql = $conn->prepare("SELECT * FROM movies WHERE lower(title) LIKE lower(:search);");
+                $sql->bindParam(':search', $search);
+            }else{
+                $sql = $conn->prepare("SELECT * FROM movies WHERE lower(title) LIKE lower(:search) AND year= :year;");
+                $sql->bindParam(':search', $search);
+                $sql->bindParam(':year', $year);
+            }
 
-            $result->execute();
-            $list = $result->fetchAll();
+            $sql->execute();
+            $list = $sql->fetchAll();
 
             echo json_encode($list);
             return;
@@ -386,6 +404,13 @@ if(isset($_POST['function'])) {
             return;
         }
 
+    }
+
+    function getKeys(){
+        include_once('../config.php');
+        echo $openmoviedb;
+        echo $themoviedb;
+        return;
     }
 
     $conn = null;

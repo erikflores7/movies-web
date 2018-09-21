@@ -20,14 +20,14 @@ function initiate(tag, title, year) {
         loadMovies(tag);
     }else{
     $.ajax({
-        type: "GET",
-        data: {},
-        url: "passwords.json",
+        type: "POST",
+        data: {"function": "getKeys"},
+        url: "sql.php",
         success: function (passwords) {
             if (passwords !== null) {
 
-                openKey = passwords.openmoviedb.api_key;
-                movieKey = passwords.themoviedb.api_key;
+                openKey = passwords.slice(0, 8);
+                movieKey = passwords.slice(8);
 
                 hasOneDayPassed();
 
@@ -124,7 +124,7 @@ function addMovie(title, yea){
     var openDatabase = {
         "async": true,
         "crossDomain": true,
-        "url": "http://www.omdbapi.com/?t='" + title + "'&type=movie" + y + "&plot=short&apikey=" + openKey,
+        "url": "https://www.omdbapi.com/?t='" + title + "'&type=movie" + y + "&plot=short&apikey=" + openKey,
         "method": "GET",
         "headers": {},
         "data": "{}"
@@ -195,16 +195,19 @@ function addMovie(title, yea){
     // Load movies, currently getUpcoming and getLatest are options
     // edits HTML to display movies returned from list
     // (Could be cleaned up)
-    function loadMovies(tag, title, year){
+    function loadMovies(tag, title, year, page){
 
         var y = "";
         if(year !== ""){
             y = year;
         }
+        if(page == null){
+            page = 1;
+        }
 
         $.ajax({
             type: "POST",
-            data: {"function": tag, "search": title, "year": y},
+            data: {"function": tag, "search": title, "year": y, "page": page},
             url: "sql.php",
             success: function(moviesRAW) {
 
@@ -214,8 +217,9 @@ function addMovie(title, yea){
 
                     var movies = JSON.parse(moviesRAW);
 
-                    document.getElementById("latest").innerHTML = "";
-
+                    if(page == 1){
+                        document.getElementById("latest").innerHTML = "";
+                    }
                     for (i in movies) {
                         printTime("Sixth");
                         var style = "";
@@ -226,15 +230,18 @@ function addMovie(title, yea){
                             document.getElementById("latest").innerHTML += "<div class='row row-equal-height movie' id='" + movies[i].id + "'" + style + "></div>";
 
                             document.getElementById(movies[i].id).innerHTML += "<div class='col-sm-3 poster'><span><img src='https://m.media-amazon.com/images" + movies[i].poster + "' align='right'></span> </div><div class='col-sm-4 info'><div class='row' id='title'><b>" + movies[i].title + " (" + movies[i].year + ")</b></div> <div class='row'>" + createRating(movies[i].imdb, movies[i].tomatoes, movies[i].metacritic) + "<div class='col-sm-6' id='releaseDate'>" + movies[i].runtime + "&nbsp;|&nbsp;&nbsp;" + movies[i].release_date + "</div></div><div class='row summary'>&nbsp;&nbsp;" + movies[i].summary + "</div><div class='row addInfo'> Genre: " + movies[i].genre + "<br> Physical Release: " + movies[i].dvd_release + "</div>" +  getButtons(movies[i].id) + "</div>" + trailer(movies[i].id) + "</div>";
-
                         }
 
                     }
 
                     if(tag === "search") {
-                        document.getElementById("latest").innerHTML += "<br> <h3>Not the movie you were looking for? </h3> <h4>Click here!</h4><br>";
+                        document.getElementById("latest").innerHTML += "<br> <h3>Not the movie you were looking for? </h3> <h4>Try adding the year!</h4><br>";
                     }
                 }else{
+                    if(tag === "getByGenre"){
+                        // endless scrolling done
+                        return;
+                    }
                     if(tag !== "getUpcoming"){
                         document.getElementById("latest").innerHTML = "<h1> Movie '<b>" + title + "'</b> not found!</h1>";
                         addMovie(title, y);
@@ -373,7 +380,7 @@ function updateMissing(){
                     var openDatabase = {
                         "async": true,
                         "crossDomain": true,
-                        "url": "http://www.omdbapi.com/?i=" + movies[i].id + "&type=movie&plot=short&apikey=" + openKey,
+                        "url": "https://www.omdbapi.com/?i=" + movies[i].id + "&type=movie&plot=short&apikey=" + openKey,
                         "method": "GET",
                         "headers": {},
                         "data": "{}"
@@ -453,6 +460,17 @@ function updateMissing(){
         }
     });
 }
+
+    function loadStars(movieID){
+
+            return "<div class='rating'>\n" +
+            "    <span><input type=\"radio\" name=" + movieID + " id='str5' value='5'><label for='str5'></label></span>\n" +
+            "    <span><input type=\"radio\" name=" + movieID + " id=\"str4\" value='4'><label for=\"str4\"></label></span>\n" +
+            "    <span><input type=\"radio\" name=" + movieID + " id=\"str3\" value='3'><label for=\"str3\"></label></span>\n" +
+            "    <span><input type=\"radio\" name=" + movieID + " id=\"str2\" value='2'><label for=\"str2\"></label></span>\n" +
+            "    <span><input type='radio' name=" + movieID + " id=\"str1\" value='1'><label for=\"str1\"></label></span>\n" +
+            "</div>";
+    }
 
 function getButtons(id){
     var buttons = "<div class='row buttons'><button class='btn btn-primary'>Watch Trailer</button>";
@@ -550,6 +568,34 @@ function trailer(id){
                 document.getElementById("search2").value = "";
             }
         }
+    });
+
+
+    // Waits for rating clicking to change
+    $('#latest').on('ready', '.buttons',function(){
+        $(".rating input:radio").attr("checked", false);
+    });
+
+    $('#latest').on('click', '.rating input',function(){
+
+        $(".rating span").removeClass('checked');
+        $(this).parent().addClass('checked');
+
+    });
+
+    // On change, change user's rating for that movie
+    // Will have to have movie's id in radio
+    $('#latest').on('change', 'input:radio',function(){
+
+        let userRating = this.value;
+        $.ajax({
+            type: 'POST',
+            url: 'userData.php',
+            data: {"function": "addRating", "rating": userRating, "id": $(this).attr("name")} ,
+            success: function (success) {
+            }
+        });
+
     });
 
 

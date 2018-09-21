@@ -28,33 +28,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         }else{
             $_SESSION['loginError'] = 'Missing items!';
         }
-    }else if(isset($_POST['registerUsername']) && isset($_POST['registerEmail']) && isset($_POST['registerPassword1']) && isset($_POST['registerPassword2'])){{
-        unset($_SESSION['loginError']);
-        $userName = $_POST['registerUsername'];
-        $email = $_POST['registerEmail'];
-        $password = $_POST['registerPassword1'];
-        $passwordCheck = $_POST['registerPassword2'];
-        if(!empty($userName) && !empty($email) && !empty($password) && !empty($passwordCheck)) {
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $_SESSION['registerError'] = "Email not valid!";
-            }
-            if ($password == $passwordCheck) {
-                if (strlen($password) < 8) {
-                    $_SESSION['registerError'] = 'Password must be at least 8 characters long!';
-                } else if (!preg_match("#[0-9]+#", $password)) {
-                    $_SESSION['registerError'] = 'Password must include at least one number!';
-                } else if (!preg_match("#[a-zA-Z]+#", $password)) {
-                    $_SESSION['registerError'] = 'Password must include at least one letter!';
-                } else if (register($userName, $email, $password) == 0) {
-                    $_SESSION['registerError'] = 'Username or Email already being used!';
-                }
-            } else {
-                $_SESSION['registerError'] = 'Passwords do not match!';
-            }
-        }else{
-            $_SESSION['registerError'] = "Missing items!";
-        }
-    }
     }
 }
 
@@ -138,18 +111,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 </nav>
 
 <header class="row">
-    <div class="col-sm-2"></div>
+    <div class="col-sm-4"></div>
     <div class="col-sm-4">
         <h1>Log In</h1>
-    </div>
-    <div class="col-sm-3">
-        <h1>Create an Account</h1>
     </div>
 </header>
 <br>
 
 <div class="row">
-    <div class="col-sm-2"></div>
+    <div class="col-sm-4"></div>
     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
 
         <form method="post">
@@ -167,42 +137,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
         </form>
+        Don't have an account? <a href="register.php"> Register!</a>
 
     </div>
 
-
-    <div class="col-sm-1"></div>
-    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-
-        <form method="post">
-            <div class="form-group">
-                <label>User Name</label>
-                <input type="text" class="form-control" name="registerUsername" placeholder="Username">
-            </div>
-            <div class="form-group">
-                <label>Email Address</label>
-                <input type="email" class="form-control" name="registerEmail" placeholder="Email Address">
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" class="form-control" name="registerPassword1" id="registerPassword1" placeholder="Password">
-            </div>
-            <div class="form-group">
-                <label>Confirm Password</label>
-                <input type="password" class="form-control" name="registerPassword2" id="registerPassword2" placeholder="Password">
-                <b class="errorMessage" id="registerError"> <?php
-                    if(isset($_SESSION['registerError'])){
-                        echo $_SESSION['registerError'];
-                    }
-                    ?> </b>
-            </div>
-            <div class="form-check">
-                <button type="submit" class="btn btn-primary">Register</button>
-            </div>
-
-        </form>
-
-    </div>
 </div>
 
 </body>

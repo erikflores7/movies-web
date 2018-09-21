@@ -14,11 +14,10 @@
             case "watchList":
                 getWatchlist();
                 break;
-
+            case "addRating":
+                addRating();
         }
     }
-
-    $conn = null;
 
     function getConnection(){
 
@@ -28,7 +27,7 @@
             return $conn;
         }
 
-        include 'config.php';
+        include_once('../config.php');
 
         $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -129,30 +128,30 @@
         }
     }
 
-function removeFromWatchlist($username, $id){
+    function removeFromWatchlist($username, $id){
 
-    $conn = getConnection();
+        $conn = getConnection();
 
-    if(isset($username) && isset($id)) {
+        if(isset($username) && isset($id)) {
 
 
-        if(!existsInWatchlist($username, $id)){
-            return;
-        }
+            if(!existsInWatchlist($username, $id)){
+                return;
+            }
 
-        try {
-            $result = $conn->prepare("DELETE FROM watchlist where movieID = :movieID AND userName = :userName");
-            $result->bindParam(':movieID', $id);
-            $result->bindParam(':userName', $username);
+            try {
+                $result = $conn->prepare("DELETE FROM watchlist where movieID = :movieID AND userName = :userName");
+                $result->bindParam(':movieID', $id);
+                $result->bindParam(':userName', $username);
 
-            $result->execute();
-            return;
+                $result->execute();
+                return;
 
-        } catch (PDOException $e) {
-            echo $e->getMessage();
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+            }
         }
     }
-}
 
     function getWatchlist(){
 
@@ -211,6 +210,97 @@ function removeFromWatchlist($username, $id){
     }else{
         echo "";
     }
+
+    function getRatings($sort){
+
+        if(!isset($_SESSION['userName'])){
+            return null;
+        }
+
+        $conn = getConnection();
+        try {
+            if(!isset($sort) || $sort != 0) {
+                $result = $conn->prepare("SELECT * FROM ratings r INNER JOIN movies m ON r.movieID = m.id WHERE r.userName = :userName");
+                $result->bindParam(':userName', $_POST['userName']);
+            }else{
+                $result = $conn->prepare("SELECT * FROM ratings r INNER JOIN movies m ON r.movieID = m.id WHERE r.userName = :userName AND r.rating = :sort");
+                $result->bindParam(':userName', $_POST['userName']);
+                $result->bindParam(':sort', $sort);
+            }
+
+            $result->execute();
+            $return = $result->fetchAll();
+
+            if(!empty($return)){
+                echo json_encode($return);
+            }else{
+                echo "DNE";
+            }
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+
+    function existsRating($username, $id){
+
+        if(!isset($username) || !isset($id)){
+            return null;
+        }
+
+        $conn = getConnection();
+        try {
+            $result = $conn->prepare("SELECT 1 FROM rating WHERE movieID = :id AND userName = :userName");
+            $result->bindParam(':id', $id);
+            $result->bindParam(':userName', $username);
+
+            $result->execute();
+            $return = $result->fetchAll();
+
+            /*if($rating != 0){
+                return ($return[0] == $rating);
+            }*/
+            return (!empty($return));
+
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    function addRating(){
+
+        $conn = getConnection();
+
+        if(isset($_SESSION['userName']) && isset($_POST['id'])) {
+            $username = $_SESSION['userName'];
+            $id = $_POST['id'];
+            if(isset($_POST['rating']) && $_POST['rating'] != 0){
+                $rating = $_POST['rating'];
+            }else{
+                $rating = 0;
+            }
+            try {
+                if(existsRating($username, $id)) {
+                    $result = $conn->prepare("UPDATE rating SET rating = :rating WHERE movieID = :movieID AND userName = :userName");
+                    $result->bindParam(':movieID', $id);
+                    $result->bindParam(':userName', $username);
+                    $result->bindParam(':rating', $rating);
+                }else{
+                    $result = $conn->prepare("INSERT INTO rating (movieID, userName, rating) VALUES (:movieID, :userName, :rating)");
+                    $result->bindParam(':movieID', $id);
+                    $result->bindParam(':userName', $username);
+                    $result->bindParam(':rating', $rating);
+                }
+
+                $result->execute();
+                return;
+
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+            }
+        }
+    }
+
 
     $conn  = null;
 

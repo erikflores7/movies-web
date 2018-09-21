@@ -2,20 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a447b5d-79e2-4562-8c6a-05accd5efd58" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/fe3e4398-e03d-4f81-abfb-394b59ffea4c.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/fe3e4398-e03d-4f81-abfb-394b59ffea4c.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/register.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/genre.html" beforeDir="false" afterPath="$PROJECT_DIR$/genre.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/genre.php" beforeDir="false" afterPath="$PROJECT_DIR$/genre.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/latest.php" beforeDir="false" afterPath="$PROJECT_DIR$/latest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/login.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sql.js" beforeDir="false" afterPath="$PROJECT_DIR$/sql.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sql.php" beforeDir="false" afterPath="$PROJECT_DIR$/sql.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/upcoming.html" beforeDir="false" afterPath="$PROJECT_DIR$/upcoming.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/userData.js" beforeDir="false" afterPath="$PROJECT_DIR$/userData.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/userData.php" beforeDir="false" afterPath="$PROJECT_DIR$/userData.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/watchlist.php" beforeDir="false" afterPath="$PROJECT_DIR$/watchlist.php" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -67,6 +63,13 @@
         <item name="moovies: schema" type="c314c289:MysqlImplModel$Schema" />
         <item name="user: table" type="98d5ac3d:MysqlImplModel$Table" />
       </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="moovies: schema" type="c314c289:MysqlImplModel$Schema" />
+        <item name="watchlist: table" type="98d5ac3d:MysqlImplModel$Table" />
+      </path>
     </expand>
     <select />
   </component>
@@ -74,38 +77,40 @@
     <session id="-1550100971">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="33" />
+          <entry key="project.closed" value="49" />
           <entry key="project.open.time.0" value="1" />
-          <entry key="project.open.time.1" value="3" />
-          <entry key="project.open.time.11" value="3" />
+          <entry key="project.open.time.1" value="4" />
+          <entry key="project.open.time.11" value="6" />
           <entry key="project.open.time.12" value="1" />
-          <entry key="project.open.time.13" value="3" />
+          <entry key="project.open.time.13" value="4" />
           <entry key="project.open.time.14" value="6" />
-          <entry key="project.open.time.15" value="5" />
-          <entry key="project.open.time.16" value="2" />
-          <entry key="project.open.time.17" value="1" />
+          <entry key="project.open.time.15" value="8" />
+          <entry key="project.open.time.16" value="6" />
+          <entry key="project.open.time.17" value="2" />
+          <entry key="project.open.time.18" value="1" />
           <entry key="project.open.time.19" value="1" />
-          <entry key="project.open.time.20" value="1" />
+          <entry key="project.open.time.20" value="2" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.6" value="1" />
           <entry key="project.open.time.8" value="1" />
           <entry key="project.open.time.9" value="2" />
-          <entry key="project.opened" value="33" />
+          <entry key="project.opened" value="48" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="config" value="4" />
-          <entry key="css" value="7" />
+          <entry key="css" value="8" />
           <entry key="gitignore" value="3" />
+          <entry key="htaccess" value="1" />
           <entry key="html" value="23" />
           <entry key="ini" value="1" />
-          <entry key="js" value="13" />
-          <entry key="json" value="3" />
+          <entry key="js" value="20" />
+          <entry key="json" value="5" />
           <entry key="md" value="6" />
-          <entry key="movies" value="11" />
-          <entry key="php" value="41" />
+          <entry key="movies" value="12" />
+          <entry key="php" value="58" />
           <entry key="sql" value="3" />
           <entry key="upcoming" value="4" />
           <entry key="user" value="3" />
@@ -114,44 +119,47 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CSS" value="7" />
-          <entry key="Database Element" value="20" />
+          <entry key="CSS" value="8" />
+          <entry key="Database Element" value="21" />
           <entry key="HTML" value="23" />
           <entry key="Ini" value="1" />
-          <entry key="JSON" value="3" />
-          <entry key="JavaScript" value="13" />
+          <entry key="JSON" value="5" />
+          <entry key="JavaScript" value="20" />
           <entry key="Markdown" value="6" />
-          <entry key="PHP" value="41" />
+          <entry key="PHP" value="58" />
           <entry key="PLAIN_TEXT" value="7" />
           <entry key="Scratch" value="3" />
+          <entry key="htaccess" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="cell" value="182" />
           <entry key="config" value="140" />
-          <entry key="css" value="2575" />
+          <entry key="css" value="2596" />
           <entry key="gitignore" value="42" />
+          <entry key="htaccess" value="14" />
           <entry key="html" value="15658" />
-          <entry key="js" value="9612" />
+          <entry key="js" value="11843" />
           <entry key="json" value="36" />
           <entry key="md" value="1835" />
-          <entry key="php" value="13844" />
+          <entry key="php" value="18018" />
           <entry key="sql" value="456" />
-          <entry key="txt" value="1265" />
+          <entry key="txt" value="1480" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="CSS" value="2575" />
+          <entry key="CSS" value="2596" />
           <entry key="HTML" value="15676" />
           <entry key="JSON" value="36" />
-          <entry key="JavaScript" value="9607" />
+          <entry key="JavaScript" value="11838" />
           <entry key="Markdown" value="1835" />
-          <entry key="PHP" value="13818" />
-          <entry key="PLAIN_TEXT" value="1447" />
+          <entry key="PHP" value="17992" />
+          <entry key="PLAIN_TEXT" value="1662" />
           <entry key="SQL" value="467" />
           <entry key="Scratch" value="184" />
+          <entry key="htaccess" value="14" />
         </counts>
       </usages-collector>
     </session>
@@ -161,17 +169,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/userData.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="71">
-              <caret line="141" lean-forward="true" selection-start-line="141" selection-end-line="141" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="das://fe3e4398-e03d-4f81-abfb-394b59ffea4c/schema/moovies/table/user">
-          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-            <state>
-              <filtering enabled="true" />
+            <state relative-caret-position="2370">
+              <caret line="163" column="46" selection-start-line="163" selection-start-column="46" selection-end-line="163" selection-end-column="46" />
             </state>
           </provider>
         </entry>
@@ -179,47 +178,44 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/userData.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-694">
-              <caret line="20" column="25" lean-forward="true" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="300">
-                <caret line="20" column="26" selection-start-line="20" selection-start-column="26" selection-end-line="20" selection-end-column="26" />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/watchlist.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="16" column="68" selection-start-line="16" selection-start-column="68" selection-end-line="16" selection-end-column="68" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
-              <caret line="90" column="19" selection-start-line="90" selection-start-column="19" selection-end-line="90" selection-end-column="19" />
+            <state relative-caret-position="360">
+              <caret line="24" column="101" selection-start-line="24" selection-start-column="101" selection-end-line="24" selection-end-column="101" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/login.php">
+        <entry file="file://$PROJECT_DIR$/sql.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1911">
-              <caret line="28" column="55" selection-start-line="28" selection-start-column="55" selection-end-line="28" selection-end-column="55" />
+            <state relative-caret-position="-2905">
+              <caret line="163" column="28" lean-forward="true" selection-start-line="163" selection-start-column="28" selection-end-line="163" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/genre.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1665">
+              <caret line="111" selection-start-line="111" selection-end-line="111" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="8" column="28" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sql.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3195">
+              <caret line="213" column="35" selection-start-line="213" selection-start-column="35" selection-end-line="213" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -237,15 +233,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>exist</find>
-      <find>username</find>
-      <find>exists</find>
-      <find>upcoming</find>
-      <find>purgeUpcoming</find>
-      <find>loadmo</find>
-      <find>test</find>
-      <find>exis</find>
-      <find>Second</find>
       <find>date</find>
       <find>addmovie</find>
       <find>printTime</find>
@@ -257,11 +244,24 @@
       <find>not found</find>
       <find>loadMo</find>
       <find>search</find>
-      <find>loadMovies</find>
       <find>trailer</find>
       <find>return false</find>
       <find>html</find>
       <find>userName</find>
+      <find>ratings</find>
+      <find>loadMovies</find>
+      <find>exists</find>
+      <find>config</find>
+      <find>omdb</find>
+      <find>loadStars</find>
+      <find>loadStars(</find>
+      <find>createRa</find>
+      <find>*</find>
+      <find>20</find>
+      <find>not the movie</find>
+      <find>page</find>
+      <find>loadMOVIES(</find>
+      <find>$username</find>
       <find>alert</find>
     </findStrings>
   </component>
@@ -286,7 +286,6 @@
         <option value="$PROJECT_DIR$/passwords.config" />
         <option value="$PROJECT_DIR$/get-upcoming.php" />
         <option value="$PROJECT_DIR$/comedy.html" />
-        <option value="$PROJECT_DIR$/config.php" />
         <option value="$PROJECT_DIR$/signout.php" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/index.html" />
@@ -294,18 +293,22 @@
         <option value="$PROJECT_DIR$/latest.html" />
         <option value="$PROJECT_DIR$/passwords.json" />
         <option value="$PROJECT_DIR$/upcoming.html" />
-        <option value="$PROJECT_DIR$/genre.php" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/index.php" />
+        <option value="$PROJECT_DIR$/main.css" />
+        <option value="$PROJECT_DIR$/watchlist.php" />
+        <option value="/private/var/folders/f5/mgypsznn5dq78xnvmfqjc5dw0000gn/T/fz3temp-2/config.php" />
+        <option value="$PROJECT_DIR$/.htaccess" />
+        <option value="$PROJECT_DIR$/config.php" />
         <option value="$PROJECT_DIR$/latest.php" />
         <option value="$PROJECT_DIR$/upcoming.php" />
-        <option value="$PROJECT_DIR$/index.php" />
-        <option value="$PROJECT_DIR$/sql.php" />
-        <option value="$PROJECT_DIR$/sql.js" />
-        <option value="$PROJECT_DIR$/watchlist.php" />
-        <option value="$PROJECT_DIR$/userData.js" />
-        <option value="$PROJECT_DIR$/main.css" />
-        <option value="$PROJECT_DIR$/userData.php" />
         <option value="$PROJECT_DIR$/login.php" />
-        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/register.php" />
+        <option value="$PROJECT_DIR$/userData.php" />
+        <option value="$PROJECT_DIR$/userData.js" />
+        <option value="$PROJECT_DIR$/genre.php" />
+        <option value="$PROJECT_DIR$/sql.js" />
+        <option value="$PROJECT_DIR$/sql.php" />
       </list>
     </option>
   </component>
@@ -317,8 +320,9 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 7.2" />
   <component name="ProjectFrameBounds">
-    <option name="y" value="23" />
-    <option name="width" value="1440" />
+    <option name="x" value="89" />
+    <option name="y" value="28" />
+    <option name="width" value="1351" />
     <option name="height" value="805" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -429,7 +433,22 @@
       <workItem from="1535409168077" duration="5465000" />
       <workItem from="1535515139561" duration="2789000" />
       <workItem from="1535526559544" duration="180000" />
-      <workItem from="1535841022827" duration="8976000" />
+      <workItem from="1535841022827" duration="10449000" />
+      <workItem from="1535904714709" duration="85000" />
+      <workItem from="1535907105799" duration="6000" />
+      <workItem from="1535908771372" duration="252000" />
+      <workItem from="1535917507232" duration="483000" />
+      <workItem from="1535917995147" duration="3022000" />
+      <workItem from="1535960853200" duration="135000" />
+      <workItem from="1535999506271" duration="1354000" />
+      <workItem from="1536618773962" duration="698000" />
+      <workItem from="1536653725175" duration="2446000" />
+      <workItem from="1536729084338" duration="5586000" />
+      <workItem from="1536818785099" duration="567000" />
+      <workItem from="1536874635458" duration="14856000" />
+      <workItem from="1536987911703" duration="4545000" />
+      <workItem from="1537164666094" duration="40000" />
+      <workItem from="1537253950083" duration="333000" />
     </task>
     <task id="LOCAL-00001" summary="Testing .gitignore">
       <created>1534183399375</created>
@@ -480,11 +499,18 @@
       <option name="project" value="LOCAL" />
       <updated>1535410322229</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Added Create Account feature, fixed issue with watchlist page showing every user's watchlist, improved error messages for Log In page">
+      <created>1535873933359</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1535873933359</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="236651000" />
+    <option name="totallyTimeSpent" value="272532000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -496,10 +522,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="805" extended-state="0" />
+    <frame x="89" y="28" width="1351" height="805" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.07582261" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.09243698" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -512,15 +538,15 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.4914163" weight="0.14305751" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49713877" weight="0.32867134" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5200286" side_tool="true" visible="true" weight="0.33239833" />
+      <window_info active="true" anchor="bottom" id="Event Log" order="10" sideWeight="0.52330023" side_tool="true" visible="true" weight="0.33239833" />
       <window_info anchor="bottom" id="Database Changes" order="11" sideWeight="0.49570817" weight="0.13323984" />
       <window_info anchor="bottom" id="Database Console" order="12" sideWeight="0.49570817" weight="0.15524475" />
-      <window_info anchor="bottom" id="PHP-CGI Server" order="13" sideWeight="0.47997138" visible="true" weight="0.33239833" />
+      <window_info anchor="bottom" id="PHP-CGI Server" order="13" sideWeight="0.47669977" visible="true" weight="0.33239833" />
       <window_info active="true" anchor="bottom" id="Messages" order="14" sideWeight="0.49928468" visible="true" weight="0.3286908" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Database" order="3" visible="true" weight="0.18383405" />
+      <window_info anchor="right" id="Database" order="3" visible="true" weight="0.19633308" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -536,20 +562,15 @@
     <MESSAGE value="Added basic search function (Adds movie if missing), and changed display of movies" />
     <MESSAGE value="Added homepage with search bar, and search by Year, Optimized loading of movies a bit (Before would try to add every movie searched, now only tries to add if nothing is returned from search), added check to add to movies to check if movie already exists, added Genre Tab" />
     <MESSAGE value="Added Log In page and Watchlist page for users (Can add/remove movies, stored in database), edited navbar to alter between Log In and Account based on being logged in, changed some pages to .php" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Log In page and Watchlist page for users (Can add/remove movies, stored in database), edited navbar to alter between Log In and Account based on being logged in, changed some pages to .php" />
+    <MESSAGE value="Added Create Account feature, fixed issue with watchlist page showing every user's watchlist, improved error messages for Log In page" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Create Account feature, fixed issue with watchlist page showing every user's watchlist, improved error messages for Log In page" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file:///etc/php.ini">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$USER_HOME$/Sites/test.php" />
-    <entry file="das://fe3e4398-e03d-4f81-abfb-394b59ffea4c/schema/moovies/table/upcoming">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="das://fe3e4398-e03d-4f81-abfb-394b59ffea4c/schema/moovies/table/upcoming" />
     <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/fe3e4398-e03d-4f81-abfb-394b59ffea4c/console.sql">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -576,123 +597,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/latest.html" />
     <entry file="file://$PROJECT_DIR$/passwords.config" />
-    <entry file="file://$PROJECT_DIR$/passwords.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="22" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="3" lean-forward="true" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/latest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="35" column="37" selection-start-line="35" selection-start-column="37" selection-end-line="35" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://fe3e4398-e03d-4f81-abfb-394b59ffea4c/schema/moovies/table/movies">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="das://fe3e4398-e03d-4f81-abfb-394b59ffea4c/schema/moovies/table/watchlist" />
+    <entry file="file://$USER_HOME$/Desktop/pixel-sorter-master/sort.php" />
+    <entry file="das://fe3e4398-e03d-4f81-abfb-394b59ffea4c/schema/moovies/table/user" />
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1320">
-          <caret line="88" column="82" selection-start-line="88" selection-start-column="82" selection-end-line="88" selection-end-column="82" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/genre.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="59" lean-forward="true" selection-start-line="59" selection-end-line="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sql.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1431">
-          <caret line="440" column="38" selection-start-line="440" selection-start-column="38" selection-end-line="440" selection-end-column="38" />
-          <folding>
-            <element signature="n#style#0;n#img#0;n#li#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#li#0;n#!!top" expanded="true" />
-            <element signature="e#236#242#0" expanded="true" />
-            <element signature="e#243#249#0" expanded="true" />
-            <element signature="e#249#255#0" expanded="true" />
-            <element signature="e#292#298#0" expanded="true" />
-            <element signature="e#298#304#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sql.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="41" column="28" selection-start-line="41" selection-start-column="28" selection-end-line="41" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://fe3e4398-e03d-4f81-abfb-394b59ffea4c/schema/moovies/table/watchlist">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/upcoming.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="25" selection-start-line="1" selection-start-column="25" selection-end-line="1" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Desktop/pixel-sorter-master/sort.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="90" column="19" selection-start-line="90" selection-start-column="19" selection-end-line="90" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/userData.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-694">
-          <caret line="20" column="25" lean-forward="true" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="25" />
+          <caret line="88" column="73" lean-forward="true" selection-start-line="88" selection-start-column="73" selection-end-line="88" selection-end-column="73" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/watchlist.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="16" column="68" selection-start-line="16" selection-start-column="68" selection-end-line="16" selection-end-column="68" />
+        <state relative-caret-position="375">
+          <caret line="30" column="32" selection-start-line="30" selection-start-column="32" selection-end-line="30" selection-end-column="32" />
         </state>
       </provider>
     </entry>
-    <entry file="das://fe3e4398-e03d-4f81-abfb-394b59ffea4c/schema/moovies/table/user">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/userData.php">
+    <entry file="file://$PROJECT_DIR$/.htaccess" />
+    <entry file="file://$PROJECT_DIR$/passwords.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="71">
-          <caret line="141" lean-forward="true" selection-start-line="141" selection-end-line="141" />
+        <state relative-caret-position="30">
+          <caret line="2" column="15" lean-forward="true" selection-start-line="2" selection-start-column="15" selection-end-line="2" selection-end-column="23" />
         </state>
       </provider>
     </entry>
+    <entry file="file:///private/var/folders/f5/mgypsznn5dq78xnvmfqjc5dw0000gn/T/fz3temp-2/config.php" />
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -703,10 +633,87 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="339">
+          <caret line="123" column="5" selection-start-line="123" selection-start-column="5" selection-end-line="123" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/latest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="81" column="45" selection-start-line="81" selection-start-column="45" selection-end-line="81" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/login.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1911">
-          <caret line="28" column="55" selection-start-line="28" selection-start-column="55" selection-end-line="28" selection-end-column="55" />
+        <state relative-caret-position="477">
+          <caret line="139" column="31" selection-start-line="139" selection-start-column="31" selection-end-line="139" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/register.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="55">
+          <caret line="125" column="24" selection-start-line="125" selection-start-column="24" selection-end-line="125" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/upcoming.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="78" selection-start-line="78" selection-end-line="78" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://fe3e4398-e03d-4f81-abfb-394b59ffea4c/schema/moovies/table/movies">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/userData.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2370">
+          <caret line="163" column="46" selection-start-line="163" selection-start-column="46" selection-end-line="163" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/userData.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" column="101" selection-start-line="24" selection-start-column="101" selection-end-line="24" selection-end-column="101" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/genre.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1665">
+          <caret line="111" selection-start-line="111" selection-end-line="111" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="8" column="28" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sql.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3195">
+          <caret line="213" column="35" selection-start-line="213" selection-start-column="35" selection-end-line="213" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sql.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2905">
+          <caret line="163" column="28" lean-forward="true" selection-start-line="163" selection-start-column="28" selection-end-line="163" selection-end-column="28" />
         </state>
       </provider>
     </entry>
