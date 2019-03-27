@@ -60,6 +60,14 @@
         }
     }
 
+    /**
+     *  Makes sure username and email have not been used yet
+     *
+     * @param $username
+     * @param $email
+     * @param $password
+     * @return int
+     */
     function register($username, $email, $password){
         $conn = getConnection();
         if(isset($username) && isset($password)) {
@@ -83,6 +91,14 @@
         }
     }
 
+    /**
+     *  Adds user info to database
+     *
+     * @param $username
+     * @param $email
+     * @param $password - should be hashed already
+     * @return int Returns 1 if successful
+     */
     function addUser($username, $email, $password){
         $conn = getConnection();
         if(isset($username) && isset($password)) {
@@ -153,6 +169,9 @@
         }
     }
 
+    /**
+     * @return User's watchlist, DNE if there are none
+     */
     function getWatchlist(){
 
         if(!isset($_POST['userName'])){
@@ -177,6 +196,13 @@
         }
     }
 
+    /**
+     *  Checks if there is any movie with the IMDB id '$id' in user's database
+     *
+     * @param $username
+     * @param $id
+     * @return bool|null
+     */
     function existsInWatchlist($username, $id){
 
         if(!isset($username) || !isset($id)){
@@ -199,6 +225,9 @@
         }
     }
 
+    /**
+     *  Handles outside calls for adding/removing movies from user's watchlist
+     */
     if(isset($_POST['addToWatchlist']) && isset($_SESSION['userName'])){
         addToWatchlist($_SESSION['userName'], $_POST['addToWatchlist']);
         echo "added";

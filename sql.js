@@ -75,46 +75,46 @@ function createRating(imdb, tomatoes, metacritic){
 }
 
 
-// Gets list of "Upcoming Movies" from API
-// However it returns movies already released as well as no imdbID
-function getUpcomingMovies(){
+    // Gets list of "Upcoming Movies" from API
+    // However it returns movies already released as well as no imdbID
+    function getUpcomingMovies(){
 
-    var upcomingMovies = {
-        "async": true,
-        "crossDomain": true,
-        "url": "https://api.themoviedb.org/3/movie/upcoming?page=1&language=en-US&api_key=" + movieKey,
-        "method": "GET",
-        "headers": {},
-        "data": "{}"
+        var upcomingMovies = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://api.themoviedb.org/3/movie/upcoming?page=1&language=en-US&api_key=" + movieKey,
+            "method": "GET",
+            "headers": {},
+            "data": "{}"
+        }
+
+
+        $.ajax(upcomingMovies).done(function (response) {
+
+            var size = response.results.length - 1;
+
+            for(i in response.results){
+
+                var title = response.results[i].title;
+
+                $.ajax({
+                    type: "POST",
+                    data: {"function":"shouldAddUpcoming","title":title},
+                    url: "sql.php",
+                    success: function(data){
+                        if(data[0] == 0){ // If not in database, try to add the movie
+                            var movie = data.slice(1);
+                            addMovie(movie, "2019"); // TODO change this
+                        }
+                    }
+                });
+            }
+        });
     }
 
-
-    $.ajax(upcomingMovies).done(function (response) {
-
-        var size = response.results.length - 1;
-
-        for(i in response.results){
-
-            var title = response.results[i].title;
-
-            $.ajax({
-                type: "POST",
-                data: {"function":"shouldAddUpcoming","title":title},
-                url: "sql.php",
-                success: function(data){
-                    if(data[0] == 0){
-                        var movie = data.slice(1);
-                        addMovie(movie, "2018");
-                    }
-                }
-            });
-        }
-    });
-}
-
-// Adds movie by title, used after using getUpcoming as that returns title
-// Adding by other criteria to be added
-function addMovie(title, yea){
+    // Adds movie by title, used after using getUpcoming as that returns title
+    // Adding by other criteria to be added
+    function addMovie(title, yea){
 
     var y = "";
     if(yea !== ""){
@@ -177,7 +177,7 @@ function addMovie(title, yea){
                 url: "sql.php",
                 success: function (data) {
                     printTime("Fourth");
-                    if(upcoming){
+                    if(upcoming || latest){
                         loadMovies("getUpcoming");
                     }else{
                         loadMovies("search", realTitle, year);
@@ -335,7 +335,12 @@ function addMovie(title, yea){
     }
 
 
-    // Movie that just released or is yet to be released
+    /**
+     * Checks if date is today or in future
+     *
+     * @param date: movie date to check
+     * @returns {boolean} Returns true if date is today or in the future
+     */
     function isUpcoming(date){
 
         var today = new Date();
@@ -359,109 +364,113 @@ function addMovie(title, yea){
         return (movieRelease.getFullYear() >= today.getFullYear() && movieRelease.getMonth() >= (today.getMonth() - 3));
     }
 
+    /**
+     * Gets list of movies missing IMDB rating, then searches each using API to try and find new info
+     *  -- For future: add param to check for other missing data such as summary or release date
+     */
+    function updateMissing(){
 
+        $.ajax({
+            type: "POST",
+            data: {"function":"getMissingIMDB"},
+            url: "sql.php",
+            success: function (data) {
 
-// Gets list of movies missing IMDB rating, then will look them up using api, one by one, updating each
-// Other missing data could be added to be checked in future but this seems to be good for now
-function updateMissing(){
+                if(data !== null){
 
-    $.ajax({
-        type: "POST",
-        data: {"function":"getMissingIMDB"},
-        url: "sql.php",
-        success: function (data) {
+                    var movies = JSON.parse(data);
 
-            if(data !== null){
+                    for (i in movies) {
 
-                var movies = JSON.parse(data);
-
-                for (i in movies) {
-
-                    var openDatabase = {
-                        "async": true,
-                        "crossDomain": true,
-                        "url": "https://www.omdbapi.com/?i=" + movies[i].id + "&type=movie&plot=short&apikey=" + openKey,
-                        "method": "GET",
-                        "headers": {},
-                        "data": "{}"
-                    }
-
-                    $.ajax(openDatabase).done(function (movie) {
-
-                        if (movie.Response === "True") {
-
-                            var id = movie.imdbID;
-                            var release_date = movie.Released;
-                            var year = movie.Year;
-                            var genre = movie.Genre;
-                            var imdb = movie.imdbRating;
-                            var tomatoes = "";
-                            if (movie.Ratings !== null) {
-                                for (i in movie.Ratings) {
-                                    if (movie.Ratings[i].Source === "Rotten Tomatoes") {
-                                        tomatoes = movie.Ratings[i].Value;
-                                    }
-                                }
-                            }
-                            var metacritic = movie.Metascore;
-                            var dvd_release = movie.DVD;
-                            var runtime = movie.Runtime;
-                            var poster = "";
-                            if (movie.Poster !== null) {
-                                poster = movie.Poster.slice(33);
-                                if(!poster.startsWith('/')){
-                                    poster = "/" + poster;
-                                }
-                            }
-                            var summary = movie.Plot;
-
-                            var upcoming = 0;
-                            if (isUpcoming(release_date)) {
-                                upcoming = 1;
-                            }
-                            var latest = 0;
-                            if (isLatest(release_date)) {
-                                latest = 1;
-                            }
-
-                            $.ajax({
-                                type: "POST",
-                                data: {
-                                    "function": "updateMovie",
-                                    "id": id,
-                                    "release_date": release_date,
-                                    "year": year,
-                                    "genre": genre,
-                                    "imdb": imdb,
-                                    "tomatoes": tomatoes,
-                                    "metacritic": metacritic,
-                                    "dvd_release": dvd_release,
-                                    "runtime": runtime,
-                                    "poster": poster,
-                                    "summary": summary,
-                                    "upcoming": upcoming,
-                                    "latest": latest
-                                },
-                                url: "sql.php",
-                                success: function (data) {
-
-                                    //document.getElementById("latest").innerText += data;
-
-                                }
-                            });
-
+                        var openDatabase = {
+                            "async": true,
+                            "crossDomain": true,
+                            "url": "https://www.omdbapi.com/?i=" + movies[i].id + "&type=movie&plot=short&apikey=" + openKey,
+                            "method": "GET",
+                            "headers": {},
+                            "data": "{}"
                         }
 
-                    });
+                        $.ajax(openDatabase).done(function (movie) {
 
+                            if (movie.Response === "True") {
+
+                                var id = movie.imdbID;
+                                var release_date = movie.Released;
+                                var year = movie.Year;
+                                var genre = movie.Genre;
+                                var imdb = movie.imdbRating;
+                                var tomatoes = "";
+                                if (movie.Ratings !== null) {
+                                    for (i in movie.Ratings) {
+                                        if (movie.Ratings[i].Source === "Rotten Tomatoes") {
+                                            tomatoes = movie.Ratings[i].Value;
+                                        }
+                                    }
+                                }
+                                var metacritic = movie.Metascore;
+                                var dvd_release = movie.DVD;
+                                var runtime = movie.Runtime;
+                                var poster = "";
+                                if (movie.Poster !== null) {
+                                    poster = movie.Poster.slice(33);
+                                    if(!poster.startsWith('/')){
+                                        poster = "/" + poster;
+                                    }
+                                }
+                                var summary = movie.Plot;
+
+                                var upcoming = 0;
+                                if (isUpcoming(release_date)) {
+                                    upcoming = 1;
+                                }
+                                var latest = 0;
+                                if (isLatest(release_date)) {
+                                    latest = 1;
+                                }
+
+                                $.ajax({
+                                    type: "POST",
+                                    data: {
+                                        "function": "updateMovie",
+                                        "id": id,
+                                        "release_date": release_date,
+                                        "year": year,
+                                        "genre": genre,
+                                        "imdb": imdb,
+                                        "tomatoes": tomatoes,
+                                        "metacritic": metacritic,
+                                        "dvd_release": dvd_release,
+                                        "runtime": runtime,
+                                        "poster": poster,
+                                        "summary": summary,
+                                        "upcoming": upcoming,
+                                        "latest": latest
+                                    },
+                                    url: "sql.php",
+                                    success: function (data) {
+                                        //document.getElementById("latest").innerText += data;
+                                    }
+                                });
+
+                            }
+
+                        });
+
+                    }
                 }
+
             }
+        });
+    }
 
-        }
-    });
-}
-
-    function loadStars(movieID){
+/**
+ * Creates class 'rating' that contains 5 hover-able stars
+ *
+ * @param movieID imdb ID
+ * @returns {string}
+ */
+function loadStars(movieID){
 
             return "<div class='rating'>\n" +
             "    <span><input type=\"radio\" name=" + movieID + " id='str5' value='5'><label for='str5'></label></span>\n" +
@@ -472,20 +481,25 @@ function updateMissing(){
             "</div>";
     }
 
-function getButtons(id){
-    var buttons = "<div class='row buttons'><button class='btn btn-primary'>Watch Trailer</button>";
-        buttons += "<button class='btn btn-primary disabled'>Buy Tickets</button>";
-        buttons += "<button name='addToWatchlist' class='btn btn-primary' value='" + id + "' id='watchlist" + id + "'>+ Watchlist</button>";
+    function getButtons(id){
+        var buttons = "<div class='row buttons'><button class='btn btn-primary'>Watch Trailer</button>";
+            buttons += "<button class='btn btn-primary disabled'>Buy Tickets</button>";
+            buttons += "<button name='addToWatchlist' class='btn btn-primary' value='" + id + "' id='watchlist" + id + "'>+ Watchlist</button>";
 
-    buttons += "</div>";
-        return buttons;
-}
+        buttons += "</div>";
+            return buttons;
+    }
 
-function trailer(id){
-
-     var video = "<video width='320' height='240' controls> <source src='' type='video/mp4'> Your browser does not support this video. </video>";
-    return "";
-}
+    /**
+     *  Create video element with movie trailer with imdb ID 'id'
+     *
+     * @param id imdb ID
+     * @returns {string}
+     */
+    function trailer(id){
+         var video = "<video width='320' height='240' controls> <source src='' type='video/mp4'> Your browser does not support this video. </video>";
+        return "";
+    }
 
     // addMovie will search if movie exists in database, if not it will look up keyword and add it
     function search(title, year) {

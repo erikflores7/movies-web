@@ -1,6 +1,4 @@
 
-
-
     function loadMovies(tag, userName){
 
         $.ajax({

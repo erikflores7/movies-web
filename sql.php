@@ -6,19 +6,19 @@
  * Time: 9:52 PM
  */
 
-$id = "";
-$title = "";
-$year = "";
-$release_date = "";
-$genre = "";
-$imdb = "";
-$tomatoes = "";
-$metacritic = "";
-$dvd_release = "";
-$runtime = "";
-$poster = "";
-$summary = "";
-$upcoming = 0;
+    $id = "";
+    $title = "";
+    $year = "";
+    $release_date = "";
+    $genre = "";
+    $imdb = "";
+    $tomatoes = "";
+    $metacritic = "";
+    $dvd_release = "";
+    $runtime = "";
+    $poster = "";
+    $summary = "";
+    $upcoming = 0;
     $latest = 0;
 
     $conn = null;

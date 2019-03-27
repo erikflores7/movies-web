@@ -3,7 +3,7 @@
 
 <?php
     session_start();
-    $_SESSION['page'] = 1;
+    $_SESSION['page'] = 1; // Sets the page number to '1'
 ?>
 
 <head>
@@ -110,7 +110,6 @@
                 let page  = parseInt($('#counter').attr("value"), 10) + 1;
                 $('#counter').val(page);
                 loadMovies('getByGenre', params.get('genre'), '', page);
-
         }
     });
 
